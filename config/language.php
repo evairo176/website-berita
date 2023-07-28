@@ -552,4 +552,394 @@ return  [
             ]
         ]
     ],
+    "eu" => [
+        "name" => "Basque",
+        "nativeName" => "Euskara",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ca" => [
+        "name" => "Catalan",
+        "nativeName" => "Català",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ga" => [
+        "name" => "Irish",
+        "nativeName" => "Gaeilge",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "is" => [
+        "name" => "Icelandic",
+        "nativeName" => "Íslenska",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ku" => [
+        "name" => "Kurdish",
+        "nativeName" => "Kurdî",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "mn" => [
+        "name" => "Mongolian",
+        "nativeName" => "Монгол",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ne" => [
+        "name" => "Nepali",
+        "nativeName" => "नेपाली",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "pa" => [
+        "name" => "Punjabi",
+        "nativeName" => "ਪੰਜਾਬੀ",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ps" => [
+        "name" => "Pashto",
+        "nativeName" => "پښتو",
+        "dir" => "rtl",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "si" => [
+        "name" => "Sinhala",
+        "nativeName" => "සිංහල",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ta" => [
+        "name" => "Tamil",
+        "nativeName" => "தமிழ்",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "te" => [
+        "name" => "Telugu",
+        "nativeName" => "తెలుగు",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "uz" => [
+        "name" => "Uzbek",
+        "nativeName" => "Oʻzbekcha",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "xh" => [
+        "name" => "Xhosa",
+        "nativeName" => "isiXhosa",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "zu" => [
+        "name" => "Zulu",
+        "nativeName" => "isiZulu",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "az" => [
+        "name" => "Azerbaijani",
+        "nativeName" => "Azərbaycan dili",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "be" => [
+        "name" => "Belarusian",
+        "nativeName" => "Беларуская",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "bs" => [
+        "name" => "Bosnian",
+        "nativeName" => "Bosanski",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "km" => [
+        "name" => "Khmer",
+        "nativeName" => "ភាសាខ្មែរ",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "lo" => [
+        "name" => "Lao",
+        "nativeName" => "ລາວ",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "my" => [
+        "name" => "Burmese",
+        "nativeName" => "ဗမာစာ",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "si" => [
+        "name" => "Sinhala",
+        "nativeName" => "සිංහල",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "sd" => [
+        "name" => "Sindhi",
+        "nativeName" => "سنڌي",
+        "dir" => "rtl",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "tg" => [
+        "name" => "Tajik",
+        "nativeName" => "Тоҷикӣ",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "tk" => [
+        "name" => "Turkmen",
+        "nativeName" => "Туркмен",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "ug" => [
+        "name" => "Uighur",
+        "nativeName" => "ئۇيغۇرچە",
+        "dir" => "rtl",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "uz" => [
+        "name" => "Uzbek",
+        "nativeName" => "Oʻzbekcha",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "yi" => [
+        "name" => "Yiddish",
+        "nativeName" => "ייִדיש",
+        "dir" => "rtl",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "yo" => [
+        "name" => "Yoruba",
+        "nativeName" => "Yorùbá",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
+    "zu" => [
+        "name" => "Zulu",
+        "nativeName" => "isiZulu",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en"
+            ]
+        ]
+    ],
 ];
