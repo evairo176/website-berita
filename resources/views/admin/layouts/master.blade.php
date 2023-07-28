@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>General Dashboard &mdash; </title>
+    <title>Dashboard &mdash; </title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -12,6 +12,7 @@
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/modules/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="{{ asset('/admin') }}/assets/modules/select2/dist/css/select2.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/css/style.css">
@@ -64,6 +65,7 @@
     <!-- JS Libraies -->
     <script src="{{ asset('/admin') }}/assets/modules/summernote/summernote-bs4.js"></script>
     <script src="{{ asset('/admin') }}/assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js"></script>
+    <script src="{{ asset('/admin') }}/assets/modules/select2/dist/js/select2.full.min.js"></script>
     @include('sweetalert::alert')
 
 
