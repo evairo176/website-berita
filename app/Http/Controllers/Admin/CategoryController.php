@@ -22,7 +22,6 @@ class CategoryController extends Controller
         $languages = Language::all();
 
 
-
         if ($request->ajax()) {
             // dd($request->all());
             $lang = $request->input('language');
