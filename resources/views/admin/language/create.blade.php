@@ -16,9 +16,10 @@
                     <div class="form-group">
                         <label for="lang">{{ __('Language ' . count(config('language'))) }}</label>
                         <select id="language-select" name="lang" class="form-control select2">
-                            <option value="">---Select---</option>
+                            <option value="">---{{ __('Select') }}---</option>
                             @foreach (config('language') as $key => $lang)
-                                <option value="{{ $key }}">{{ $lang['name'] . ' - ' . $lang['nativeName'] }}
+                                <option data-name="{{ $lang['name'] . ' - ' . $lang['nativeName'] }}"
+                                    value="{{ $key }}">{{ $lang['name'] . ' - ' . $lang['nativeName'] }}
                                 </option>
                             @endforeach
                         </select>
@@ -49,8 +50,8 @@
                     <div class="form-group">
                         <label for="default">{{ __('Is it default?') }}</label>
                         <select name="default" class="form-control">
-                            <option value="0">No</option>
-                            <option value="1">Yes</option>
+                            <option value="0">{{ __('No') }}</option>
+                            <option value="1">{{ __('Yes') }}</option>
                         </select>
                         @error('default')
                             <p style="font-size: 80%;
@@ -61,8 +62,8 @@
                     <div class="form-group">
                         <label for="status">{{ __('Status') }}</label>
                         <select name="status" class="form-control">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="1">{{ __('Active') }}</option>
+                            <option value="0">{{ __('Inactive') }}</option>
                         </select>
                         @error('status')
                             <p style="font-size: 80%;
@@ -70,7 +71,7 @@
                                 {{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                 </form>
             </div>
         </div>
@@ -81,7 +82,8 @@
         $(document).ready(function() {
             $('#language-select').on('change', function() {
                 let value = $(this).val();
-                let name = $(this).children(':selected').text();
+                let name = $(this).children(':selected').attr("data-name");
+                console.log(name)
                 $('#slug').val(value);
                 $('#name').val(name);
             })

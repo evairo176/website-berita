@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminLanguageStoreRequest;
+use App\Http\Requests\AdminLanguageUpdateRequest;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 use Yajra\DataTables\DataTables;
 
 class LanguageController extends Controller
@@ -41,9 +43,8 @@ class LanguageController extends Controller
                 })
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '" class="edit btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
-                    <a href="' . route('admin.language.destroy', $row->id) . '" class="edit btn btn-danger btn-sm"> <i class="fas fa-trash"></i></a>';
-
+                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
+                    <a href="' . route('admin.language.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'default', 'status'])
@@ -90,15 +91,25 @@ class LanguageController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.language.edit');
+        $language = Language::findOrFail($id);
+        return view('admin.language.edit', compact('language'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminLanguageUpdateRequest $request, string $id)
     {
-        //
+        $language = Language::findOrFail($id);
+        $language->name = $request->name;
+        $language->lang = $request->lang;
+        $language->slug = $request->slug;
+        $language->default = $request->default;
+        $language->status = $request->status;
+        $language->save();
+        toast(__('Updated successfully'), 'success')->width("350");
+
+        return redirect()->route('admin.language.index');
     }
 
     /**
@@ -106,6 +117,26 @@ class LanguageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $language = Language::findOrFail($id);
+
+            if ($language->lang == 'en') {
+                return response([
+                    "status" => "error",
+                    'message' => __('Can\'t delete this one!')
+                ]);
+            }
+
+            $language->delete();
+            return response([
+                "status" => "success",
+                'message' => __('Deleted Successfully!')
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                "status" => "error",
+                'message' => __('Something went wrong!')
+            ]);
+        }
     }
 }
