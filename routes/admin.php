@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,8 @@ Route::group(['prefix' => 'admin', "as" => "admin.", 'middleware' => ['admin']],
 
     // category routes
     Route::resource('category', CategoryController::class);
+
+    // news routes
+    Route::get('fetch-news-category', [NewsController::class, 'fetchCategory'])->name('fetch-news-category');
+    Route::resource('news', NewsController::class);
 });
