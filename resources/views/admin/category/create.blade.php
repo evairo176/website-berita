@@ -3,27 +3,26 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Language') }}</h1>
+            <h1>{{ __('Category') }}</h1>
         </div>
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Create Languages') }}</h4>
+                <h4>{{ __('Create Category') }}</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.language.store') }}" method="POST">
+                <form action="{{ route('admin.category.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
-                        <label for="lang">{{ __('Language ' . count(config('language'))) }}</label>
-                        <select id="language-select" name="lang" class="form-control select2">
+                        <label for="language">{{ __('Language ' . count($languages)) }}</label>
+                        <select id="language-select" name="language" class="form-control select2">
                             <option value="">---{{ __('Select') }}---</option>
-                            @foreach (config('language') as $key => $lang)
-                                <option data-name="{{ $lang['name'] }}" value="{{ $key }}">
-                                    {{ $lang['name'] . ' - ' . $lang['nativeName'] }}
+                            @foreach ($languages as $lang)
+                                <option data-name="{{ $lang->name }}" value="{{ $lang->lang }}">{{ $lang->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('lang')
+                        @error('language')
                             <p style="font-size: 80%;
                         color: #dc3545;">
                                 {{ $message }}</p>
@@ -31,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">{{ __('Name') }}</label>
-                        <input id="name" readonly name="name" type="text" class="form-control">
+                        <input id="name" name="name" type="text" class="form-control">
                         @error('name')
                             <p style="font-size: 80%;
                         color: #dc3545;">
@@ -39,21 +38,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="slug">{{ __('Slug') }}</label>
-                        <input id="slug" readonly name="slug" type="text" class="form-control">
-                        @error('slug')
-                            <p style="font-size: 80%;
-                        color: #dc3545;">
-                                {{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="default">{{ __('Is it default?') }}</label>
-                        <select name="default" class="form-control">
+                        <label for="show_at_nav">{{ __('Show at Nav') }}</label>
+                        <select name="show_at_nav" class="form-control">
                             <option value="0">{{ __('No') }}</option>
                             <option value="1">{{ __('Yes') }}</option>
                         </select>
-                        @error('default')
+                        @error('show_at_nav')
                             <p style="font-size: 80%;
                         color: #dc3545;">
                                 {{ $message }}</p>
@@ -78,15 +68,4 @@
     </section>
 @endsection
 @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#language-select').on('change', function() {
-                let value = $(this).val();
-                let name = $(this).children(':selected').attr("data-name");
-                console.log(name)
-                $('#slug').val(value);
-                $('#name').val(name);
-            })
-        })
-    </script>
 @endpush

@@ -10,7 +10,7 @@
                 <h4>{{ __('All Languages') }}</h4>
                 <div class="card-header-action">
                     <a href="{{ route('admin.language.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i>{{ __(' Create') }}
+                        <i class="fas fa-plus"></i>{{ __(' Create new') }}
                     </a>
                 </div>
             </div>

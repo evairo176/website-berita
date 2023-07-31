@@ -15,7 +15,7 @@ class LanguageSeeder extends Seeder
     {
         $language = new Language();
 
-        $language->name = 'English - English';
+        $language->name = 'English';
         $language->lang = 'en';
         $language->slug = 'en';
         $language->default = 1;

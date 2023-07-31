@@ -15,6 +15,8 @@
                         class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>
+            <li><a class="nav-link" href="{{ route('admin.category.index') }}"><i class="far fa-square"></i>
+                    <span>Category</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.language.index') }}"><i class="far fa-square"></i>
                     <span>Languages</span></a></li>
             {{-- <li class="dropdown">

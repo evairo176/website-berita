@@ -18,8 +18,8 @@
                         <select id="language-select" name="lang" class="form-control select2">
                             <option value="">---{{ __('Select') }}---</option>
                             @foreach (config('language') as $key => $lang)
-                                <option data-name="{{ $lang['name'] . ' - ' . $lang['nativeName'] }}"
-                                    @if ($language->lang === $key) selected @endif value="{{ $key }}">
+                                <option data-name="{{ $lang['name'] }}" @if ($language->lang === $key) selected @endif
+                                    value="{{ $key }}">
                                     {{ $lang['name'] . ' - ' . $lang['nativeName'] }}
                                 </option>
                             @endforeach
