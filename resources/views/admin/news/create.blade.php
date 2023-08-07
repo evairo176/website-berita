@@ -78,6 +78,7 @@
                                 {{ $message }}</p>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="meta_title">{{ __('Meta Title') }}</label>
                         <input name="meta_title" type="text" class="form-control">
