@@ -53,6 +53,7 @@
                 </div>
             </div>
         </div>
+        <button id="tes"></button>
     </section>
 @endsection
 
@@ -148,5 +149,43 @@
 
 
         });
+
+
+
+        function toggleStatus(button) {
+            var parentLabel = button.closest(".custom-switch");
+            var checkbox = parentLabel.querySelector(".toggle-status");
+
+            var id = checkbox.getAttribute("data-id");
+            var name = checkbox.getAttribute("data-name");
+            var value = checkbox.value;
+            var isChecked = checkbox.checked ? 1 : 0;
+            // alert(isChecked)
+
+            // console.log("ID:", id);
+            // console.log("Name:", name);
+            // console.log("Value:", value);
+            // console.log("Checked:", isChecked);
+            $.ajax({
+                method: "GET",
+                url: "{{ route('admin.toggle-news-status') }}",
+                data: {
+                    id: id,
+                    name: name,
+                    status: isChecked
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Toast.fire({
+                            icon: 'success',
+                            title: data.message
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+        }
     </script>
 @endpush

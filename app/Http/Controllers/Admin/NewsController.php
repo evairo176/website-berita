@@ -43,72 +43,41 @@ class NewsController extends Controller
                     return $image;
                 })
                 ->addColumn('is_breaking_news', function ($row) {
-                    $default = '';
-                    if ($row->is_breaking_news == '1') {
-                        $default = '<label class="custom-switch mt-2">
-                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    } else {
-                        $default = '<label class="custom-switch mt-2">
-                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    }
+                    $default = '<label class="custom-switch mt-2">
+                    <input onclick="toggleStatus(this)"  data-id="' . $row->id . '" data-name="is_breaking_news" ' . ($row->is_breaking_news === 1 ? 'checked' : '') . ' value="1" type="checkbox"  class="custom-switch-input toggle-status">
+                    <span class="custom-switch-indicator"></span>
+                    </label>';
 
                     return $default;
                 })
                 ->addColumn('show_at_slider', function ($row) {
-                    $default = '';
-                    if ($row->show_at_slider == '1') {
-                        $default = '<label class="custom-switch mt-2">
-                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    } else {
-                        $default = '<label class="custom-switch mt-2">
-                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    }
+                    $default = '<label class="custom-switch mt-2">
+                    <input onclick="toggleStatus(this)"  data-id="' . $row->id . '" data-name="show_at_slider" ' . ($row->show_at_slider === 1 ? 'checked' : '') . ' value="1" type="checkbox"  class="custom-switch-input toggle-status">
+                    <span class="custom-switch-indicator"></span>
+                    </label>';
 
                     return $default;
                 })
                 ->addColumn('show_at_popular', function ($row) {
-                    $default = '';
-                    if ($row->show_at_popular == '1') {
-                        $default = '<label class="custom-switch mt-2">
-                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    } else {
-                        $default = '<label class="custom-switch mt-2">
-                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    }
+                    $default = '<label class="custom-switch mt-2">
+                    <input onclick="toggleStatus(this)"  data-id="' . $row->id . '" data-name="show_at_popular" ' . ($row->show_at_popular === 1 ? 'checked' : '') . ' value="1" type="checkbox"  class="custom-switch-input toggle-status">
+                    <span class="custom-switch-indicator"></span>
+                    </label>';
 
                     return $default;
                 })
                 ->addColumn('status', function ($row) {
-                    $default = '';
-                    if ($row->status == '1') {
-                        $default = '<label class="custom-switch mt-2">
-                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
+
+                    $default = '<label class="custom-switch mt-2">
+                        <input onclick="toggleStatus(this)"  data-id="' . $row->id . '" data-name="status" ' . ($row->status === 1 ? 'checked' : '') . ' value="1" type="checkbox"  class="custom-switch-input toggle-status">
                         <span class="custom-switch-indicator"></span>
                         </label>';
-                    } else {
-                        $default = '<label class="custom-switch mt-2">
-                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                        </label>';
-                    }
 
                     return $default;
                 })
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
+                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '"class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
                     <a href="' . route('admin.language.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
@@ -209,5 +178,18 @@ class NewsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function toggleNewsStatus(Request $request)
+    {
+        try {
+            $news = News::findOrFail($request->id);
+            $news->{$request->name} = $request->status;
+            $news->save();
+
+            return response(['status' => 'success', 'message' => __('Updated Successfully')]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
