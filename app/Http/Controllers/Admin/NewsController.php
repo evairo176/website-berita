@@ -12,6 +12,7 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class NewsController extends Controller
 {
@@ -19,9 +20,101 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->input('language'));
+        // dd($news = News::where('language', "id")->orderBy('id', 'desc')->get());
         $languages = Language::all();
+        if ($request->ajax()) {
+            // dd($request->all());
+            $lang = $request->input('language');
+            $news = "";
+            if ($lang) {
+                $news = News::with('category')->where('language', $lang)->orderBy('id', 'desc')->get();
+            } else {
+                $news = News::with('category')->where('language', "en")->orderBy('id', 'desc')->get();
+            }
+            // dd($news);
+            return Datatables::of($news)
+                ->addIndexColumn()
+                ->addColumn('image', function ($row) {
+                    $url = asset($row->image);
+                    $image = '<img width="100" height="100" src="' . $url . '" alt="">';
+                    return $image;
+                })
+                ->addColumn('is_breaking_news', function ($row) {
+                    $default = '';
+                    if ($row->is_breaking_news == '1') {
+                        $default = '<label class="custom-switch mt-2">
+                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    } else {
+                        $default = '<label class="custom-switch mt-2">
+                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    }
+
+                    return $default;
+                })
+                ->addColumn('show_at_slider', function ($row) {
+                    $default = '';
+                    if ($row->show_at_slider == '1') {
+                        $default = '<label class="custom-switch mt-2">
+                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    } else {
+                        $default = '<label class="custom-switch mt-2">
+                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    }
+
+                    return $default;
+                })
+                ->addColumn('show_at_popular', function ($row) {
+                    $default = '';
+                    if ($row->show_at_popular == '1') {
+                        $default = '<label class="custom-switch mt-2">
+                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    } else {
+                        $default = '<label class="custom-switch mt-2">
+                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    }
+
+                    return $default;
+                })
+                ->addColumn('status', function ($row) {
+                    $default = '';
+                    if ($row->status == '1') {
+                        $default = '<label class="custom-switch mt-2">
+                        <input checked value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    } else {
+                        $default = '<label class="custom-switch mt-2">
+                        <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                    }
+
+                    return $default;
+                })
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '" class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
+                    <a href="' . route('admin.language.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'default', 'status', 'is_breaking_news', 'show_at_slider', 'show_at_popular', 'image'])
+                ->make(true);
+        }
         return view('admin.news.index', compact('languages'));
     }
     /**
