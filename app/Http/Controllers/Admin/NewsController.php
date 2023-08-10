@@ -12,6 +12,7 @@ use App\Models\Tag;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -259,8 +260,8 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         $sourceFilePath  = $news->image; // Provide the current file path
-        $newFileName = 'copy-' . $news->id . '.jpg'; // Provide the new file name
-
+        $imageInfo = pathinfo($sourceFilePath);
+        $newFileName = $imageInfo['filename'] . '-copy-' . $news->id . '.' . $imageInfo['extension']; // Provide the new file name
         $newFilePath = $this->duplicateAndRenameImage($sourceFilePath, $newFileName);
 
         if ($newFilePath) {
