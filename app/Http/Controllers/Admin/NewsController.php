@@ -76,9 +76,8 @@ class NewsController extends Controller
                     return $default;
                 })
                 ->addColumn('action', function ($row) {
-
-                    $btn = '<a href="' . route('admin.language.edit', $row->id) . '"class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
-                    <a href="' . route('admin.language.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
+                    $btn = '<a href="' . route('admin.news.edit', $row->id) . '"class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
+                    <a href="' . route('admin.news.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'default', 'status', 'is_breaking_news', 'show_at_slider', 'show_at_popular', 'image'])
@@ -161,7 +160,10 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $languages = Language::all();
+        $news = News::findOrFail($id);
+        $categories = Category::where('language', $news->language)->get();
+        return view('admin.news.edit', compact('languages', 'news', 'categories'));
     }
 
     /**
