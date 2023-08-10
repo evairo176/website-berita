@@ -10,9 +10,9 @@
                 <h4>{{ __('Edit News') }}</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                    @method('PUT')
                     <div class="form-group">
                         <label for="language">{{ __('Language ' . count($languages)) }}</label>
                         <select id="language-select" name="language" class="form-control select2">
@@ -76,8 +76,8 @@
                     </div>
                     <div class="form-group">
                         <label for="tags">{{ __('Tags') }}</label>
-                        <input name="tags" value="{{ implode(',', $news->tags) }}" type="text"
-                            class="form-control inputtags">
+                        <input name="tags" value="{{ formatTags($news->tags()->pluck('name')->toArray()) }}"
+                            type="text" class="form-control inputtags">
                         @error('tags')
                             <p style="font-size: 80%;
                         color: #dc3545;">
@@ -109,7 +109,8 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Status') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                                    <input {{ $news->status === 1 ? 'checked' : '' }} value="{{ $news->status }}"
+                                        type="checkbox" name="status" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
                             </div>
@@ -118,7 +119,8 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Is Breaking News') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="is_breaking_news"
+                                    <input {{ $news->is_breaking_news === 1 ? 'checked' : '' }}
+                                        value="{{ $news->is_breaking_news }}" type="checkbox" name="is_breaking_news"
                                         class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
@@ -128,7 +130,9 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Show At Slider') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="show_at_slider" class="custom-switch-input">
+                                    <input {{ $news->show_at_slider === 1 ? 'checked' : '' }}
+                                        value="{{ $news->show_at_slider }}" type="checkbox" name="show_at_slider"
+                                        class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
                             </div>
@@ -137,7 +141,8 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Show At Popular') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="show_at_popular"
+                                    <input {{ $news->show_at_popular === 1 ? 'checked' : '' }}
+                                        value="{{ $news->show_at_popular }}" type="checkbox" name="show_at_popular"
                                         class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
@@ -145,7 +150,7 @@
                         </div>
 
                     </div>
-                    <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                 </form>
             </div>
         </div>

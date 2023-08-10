@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminNewsCreateRequest;
+use App\Http\Requests\AdminNewsUpdateRequest;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\News;
@@ -77,7 +78,8 @@ class NewsController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' . route('admin.news.edit', $row->id) . '"class="btn btn-primary btn-sm"> <i class="fas fa-edit"></i></a>
-                    <a href="' . route('admin.news.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
+                    <a href="' . route('admin.news.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>
+                    <a href="' . route('admin.news-copy', $row->id) . '"class="btn btn-secondary btn-sm"> <i class="fas fa-copy"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'default', 'status', 'is_breaking_news', 'show_at_slider', 'show_at_popular', 'image'])
@@ -169,9 +171,49 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminNewsUpdateRequest $request, string $id)
     {
-        //
+
+        $news = News::findOrFail($id);
+        // handle image
+        $imagePath =  $this->handleFileUpload($request, 'image', $news->image);
+
+
+        $news->language = $request->language;
+        $news->category_id = $request->category;
+        $news->image = !empty($imagePath) ?  $imagePath : $news->image;
+        $news->title = $request->title;
+        $news->slug = Str::slug($request->title);
+        $news->content = $request->content;
+        $news->meta_title = $request->meta_title;
+        $news->meta_description = $request->meta_description;
+        $news->is_breaking_news = $request->is_breaking_news == 1 ? 1 : 0;
+        $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
+        $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
+        $news->status = $request->status == 1 ? 1 : 0;
+        $news->save();
+
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+
+        /** delete previos tags */
+        $news->tags()->delete();
+
+        /** detach tags from pivot tags */
+        $news->tags()->detach($news->tags);
+        foreach ($tags as $tag) {
+            $item = new Tag();
+
+            $item->name = $tag;
+            $item->save();
+            $tagIds[] = $item->id;
+        }
+
+        $news->tags()->attach($tagIds);
+
+        toast(__('Updated successfully'), 'success')->width("350");
+
+        return redirect()->route('admin.news.index');
     }
 
     /**
@@ -179,9 +221,24 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $news = News::findOrFail($id);
+            $this->deleteFile($news->image);
+            $news->tags()->delete();
+            $news->delete();
+
+            return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+        } catch (\Throwable $th) {
+            return response([
+                "status" => "error",
+                'message' => __('Something went wrong!')
+            ]);
+        }
     }
 
+    /**
+     * update the specified status from table News.
+     */
     public function toggleNewsStatus(Request $request)
     {
         try {
@@ -192,6 +249,32 @@ class NewsController extends Controller
             return response(['status' => 'success', 'message' => __('Updated Successfully')]);
         } catch (\Throwable $th) {
             throw $th;
+        }
+    }
+
+    /**
+     * Copy News.
+     */
+    public function copyNews(string $id)
+    {
+        $news = News::findOrFail($id);
+        $sourceFilePath  = $news->image; // Provide the current file path
+        $newFileName = 'copy-' . $news->id . '.jpg'; // Provide the new file name
+
+        $newFilePath = $this->duplicateAndRenameImage($sourceFilePath, $newFileName);
+
+        if ($newFilePath) {
+            // File name changed successfully, $newFilePath contains the path to the renamed file
+            $copyNews = $news->replicate();
+            $copyNews->image = $newFilePath;
+            $copyNews->save();
+
+            toast(__('Copied Successfully'), 'success')->width("350");
+
+            return redirect()->back();
+        } else {
+            // Current file doesn't exist
+            return response()->json(['message' => 'Current file not found'], 404);
         }
     }
 }
