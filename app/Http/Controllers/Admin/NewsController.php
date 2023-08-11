@@ -147,7 +147,7 @@ class NewsController extends Controller
 
         toast(__('Created successfully'), 'success')->width("350");
 
-        return redirect()->route('admin.news.index');
+        return redirect()->route('admin.news.index')->withInput();
     }
 
     /**

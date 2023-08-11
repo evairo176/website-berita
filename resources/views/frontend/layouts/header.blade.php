@@ -168,13 +168,11 @@
                                 <ul class="dropdown-menu dropdown-menu-left">
                                     <li><a class="dropdown-item" href="blog_details.html">Blog details</a></li>
                                     <li><a class="dropdown-item" href="404.html"> 404 Error</a></li>
-
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link  text-dark" href="contact.html"> Contact </a>
                             </li>
                         </ul>
-
                     </nav>
                 </div>
                 <div class="modal-footer">

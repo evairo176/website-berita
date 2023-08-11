@@ -3,14 +3,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="wrapp__list__article-responsive wrapp__list__article-responsive-carousel">
-                    @foreach ($breakingNews as $breaking)
+                    @foreach ($breakingNews as $news)
                         <div class="item">
                             <!-- Post Article -->
                             <div class="card__post card__post-list">
                                 <div class="image-sm">
-                                    <a href="./blog_details.html">
-                                        <img src="{{ asset($breaking->image) }}" class="img-fluid"
-                                            alt="{{ $breaking->title }}">
+                                    <a href="{{ route('news-details', $news->slug) }}">
+                                        <img src="{{ asset($news->image) }}" class="img-fluid" alt="{{ $news->title }}">
                                     </a>
                                 </div>
 
@@ -20,12 +19,12 @@
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
                                                     <span class="text-primary">
-                                                        {{ __('by') }} {{ $breaking->author_id }}
+                                                        {{ __('by') }} {{ $news->author->name }}
                                                     </span>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span class="text-dark text-capitalize">
-                                                        {{ date('M d, Y', strtotime($breaking->created_at)) }}
+                                                        {{ date('M d, Y', strtotime($news->created_at)) }}
                                                     </span>
                                                 </li>
 
@@ -33,18 +32,16 @@
                                         </div>
                                         <div class="card__post__title">
                                             <h6>
-                                                <a href="blog_details.html">
-                                                    {{ $breaking->title }}
+                                                <a href="{{ route('news-details', $news->slug) }}">
+                                                    {{ truncate($news->title, 50) }}
                                                 </a>
                                             </h6>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>
