@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,11 +26,18 @@ class HomeController extends Controller
         ])->activeEntries()->withLocalize()->first();
         // dd($news);
 
-        $recentNews = News::with(['category', 'author'])->where('slug', '!=', $news->slug)->activeEntries()->withLocalize()->orderBy('id', 'desc')->take(4)->get();
+        $recentNews = News::with(['category', 'author'])
+            ->where('slug', '!=', $news->slug)
+            ->activeEntries()->withLocalize()
+            ->orderBy('id', 'desc')
+            ->take(4)
+            ->get();
+
+        $mostCommonTags = $this->mostCommonTags();
 
         $this->countView($news);
 
-        return view('frontend.news-details', compact('news', 'recentNews'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags'));
     }
 
     public function countView($news)
@@ -45,5 +54,15 @@ class HomeController extends Controller
             session(['viewed_posts' => [$news->id]]);
             $news->increment('views');
         }
+    }
+
+    public function mostCommonTags()
+    {
+        return Tag::select('name', DB::raw('COUNT(*) as count'))
+            ->where('language', getLanguage())
+            ->groupBy('name')
+            ->orderBy('count', 'desc')
+            ->take(15)
+            ->get();
     }
 }
