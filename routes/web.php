@@ -34,3 +34,7 @@ Route::get('/language', LanguageController::class)->name('frontend.change-langua
 
 /** news routes */
 Route::get('/news-details/{slug}', [HomeController::class, 'showNews'])->name('news-details');
+/** news comment */
+Route::post('/news-comment', [HomeController::class, 'handleComment'])->name('news-comment');
+/** news reply comment */
+Route::post('/news-comment-replay', [HomeController::class, 'handleReplay'])->name('news-comment-replay');
