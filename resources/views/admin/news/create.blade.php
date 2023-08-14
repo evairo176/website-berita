@@ -54,6 +54,15 @@
 
                     </div>
                     <div class="form-group">
+                        <label for="slug">{{ __('Slug') }}</label>
+                        <input value="{{ old('slug') }}" name="slug" type="text" class="form-control">
+                        @error('slug')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="title">{{ __('Title') }}</label>
                         <input value="{{ old('title') }}" name="title" type="text" class="form-control">
                         @error('title')
