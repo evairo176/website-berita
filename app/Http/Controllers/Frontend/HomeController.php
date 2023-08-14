@@ -35,11 +35,23 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
+        $nextNews = News::where('id', '>', $news->id)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('id', 'asc')
+            ->first();
+
+        $previousNews = News::where('id', '<', $news->id)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('id', 'desc')
+            ->first();
+
         $mostCommonTags = $this->mostCommonTags();
 
         $this->countView($news);
 
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews'));
     }
 
     public function countView($news)
@@ -99,5 +111,16 @@ class HomeController extends Controller
         $comment->save();
 
         return redirect()->back();
+    }
+
+    public function commentDestroy(Request $request)
+    {
+        $comment = Comment::findOrFail($request->id);
+        if (Auth::user()->id === $comment->user_id) {
+            $comment->delete();
+            return response(['status' => 'success', 'message' => _('Deleted Successfully')]);
+        }
+
+        return response(['status' => 'error', 'message' => _('Something went wrong!')]);
     }
 }

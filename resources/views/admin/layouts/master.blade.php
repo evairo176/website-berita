@@ -160,13 +160,9 @@
                                 console.error(error)
                             }
                         })
-
                     }
                 })
             })
-
-
-
         })
     </script>
 

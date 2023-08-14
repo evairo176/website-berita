@@ -198,7 +198,7 @@
                                                 </div>
                                                 <div class="comment-metadata">
                                                     <a href="javascript:;">
-                                                        <span>{{ date('M d, Y H:i', strtotime($comment->created_at)) }}</span>
+                                                        <span>{{ date('M d, Y H:m a', strtotime($comment->created_at)) }}</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -208,7 +208,7 @@
                                             <div class="reply">
                                                 <a href="#" class="comment-reply-link" data-toggle="modal"
                                                     data-target="#exampleModal{{ $comment->id }}">Reply</a>
-                                                <span>
+                                                <span class="delete-msg" data-id="{{ $comment->id }}">
                                                     <i class="fa fa-trash"></i>
                                                 </span>
                                             </div>
@@ -228,7 +228,7 @@
 
                                                                 <div class="comment-metadata">
                                                                     <a href="#">
-                                                                        <span>{{ date('M d, Y H:i', strtotime($comment->created_at)) }}</span>
+                                                                        <span>{{ date('M d, Y H:m a', strtotime($replay->created_at)) }}</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -237,11 +237,13 @@
                                                                 <p>{{ $replay->comment }}</p>
                                                             </div>
 
-                                                            <div class="reply">
-                                                                <a href="#" class="comment-reply-link"
-                                                                    data-toggle="modal"
-                                                                    data-target="#exampleModal{{ $comment->id }}">Reply</a>
-                                                                <span>
+                                                            <div class="reply" data-id="{{ $replay->id }}">
+                                                                @if ($loop->last)
+                                                                    <a href="javascript:;" class="comment-reply-link"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModal{{ $comment->id }}">Reply</a>
+                                                                @endif
+                                                                <span class="delete-msg" style="margin-left: auto">
                                                                     <i class="fa fa-trash"></i>
                                                                 </span>
                                                             </div>
@@ -321,18 +323,22 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="single_navigation-prev">
-                                <a href="#">
-                                    <span>previous post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, similique.
-                                </a>
+                                @if ($previousNews)
+                                    <a href="{{ route('news-details', $previousNews->slug) }}">
+                                        <span>{{ __('previous post') }}</span>
+                                        {!! truncate($previousNews->title, 50) !!}
+                                    </a>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="single_navigation-next text-left text-md-right">
-                                <a href="#">
-                                    <span>next post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, nesciunt.
-                                </a>
+                                @if ($nextNews)
+                                    <a href="{{ route('news-details', $nextNews->slug) }}">
+                                        <span>{{ __('next post') }}</span>
+                                        {!! truncate($nextNews->title, 50) !!}
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -610,7 +616,7 @@
                                                 <a href="{{ route('news-details', $news->slug) }}"
                                                     class="btn btn-outline-primary mb-4 text-capitalize">
                                                     {{ __('read
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    more') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    more') }}</a>
                                             </div>
                                         </div>
                                     @endif
@@ -715,3 +721,55 @@
         </div>
     </section>
 @endsection
+
+@push('content')
+    <script>
+        $(document).ready(function() {
+            $('.delete-msg').on('click', function(e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            method: 'DELETE',
+                            url: "{{ route('news-comment-destroy') }}",
+                            data: {
+                                id: id
+                            },
+                            success: function(data) {
+                                if (data.status === 'success') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.message,
+                                        'success'
+                                    )
+                                    window.location.reload();
+                                } else if (data.status === 'error') {
+                                    Swal.fire(
+                                        'Error!',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error)
+                            }
+                        })
+
+                    }
+                })
+            })
+        })
+    </script>
+@endpush

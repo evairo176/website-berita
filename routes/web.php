@@ -38,3 +38,5 @@ Route::get('/news-details/{slug}', [HomeController::class, 'showNews'])->name('n
 Route::post('/news-comment', [HomeController::class, 'handleComment'])->name('news-comment');
 /** news reply comment */
 Route::post('/news-comment-replay', [HomeController::class, 'handleReplay'])->name('news-comment-replay');
+/** news delete reply comment */
+Route::delete('/news-comment-destroy', [HomeController::class, 'commentDestroy'])->name('news-comment-destroy');
