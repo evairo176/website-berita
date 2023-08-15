@@ -28,6 +28,8 @@ class HomeController extends Controller
         ])->activeEntries()->withLocalize()->first();
         // dd($news);
 
+        $this->countView($news);
+
         $recentNews = News::with(['category', 'author'])
             ->where('slug', '!=', $news->slug)
             ->activeEntries()->withLocalize()
@@ -49,9 +51,20 @@ class HomeController extends Controller
 
         $mostCommonTags = $this->mostCommonTags();
 
-        $this->countView($news);
+        $relatedNews = News::with(['category', 'author'])
+            ->where('slug', '!=', $news->slug)
+            ->where('category_id', $news->category_id)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('id', 'desc')
+            ->take(5)
+            ->get();
 
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews'));
+        // dd($relatedNews);
+
+
+
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews'));
     }
 
     public function countView($news)
@@ -93,6 +106,8 @@ class HomeController extends Controller
         $comment->parent_id = $request->parent_id;
         $comment->comment = $request->comment;
         $comment->save();
+
+        toast(__('Comment added successfully'), 'success')->width("350");
         return redirect()->back();
     }
 
@@ -110,17 +125,21 @@ class HomeController extends Controller
         $comment->comment = $request->comment;
         $comment->save();
 
+        toast(__('Reply added successfully'), 'success')->width("350");
         return redirect()->back();
     }
 
     public function commentDestroy(Request $request)
     {
+        // dd($request->id);
         $comment = Comment::findOrFail($request->id);
+
         if (Auth::user()->id === $comment->user_id) {
             $comment->delete();
             return response(['status' => 'success', 'message' => _('Deleted Successfully')]);
         }
 
+        toast(__('Comment deleted successfully'), 'success')->width("350");
         return response(['status' => 'error', 'message' => _('Something went wrong!')]);
     }
 }

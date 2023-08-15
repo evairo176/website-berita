@@ -79,37 +79,47 @@
                                 </div>
 
                                 <ul class="list-inline">
-                                    <span class="share">share on:</span>
+                                    <span class="share">{{ __('share on') }}:</span>
                                     <li class="list-inline-item">
-                                        <a class="btn btn-social-o facebook" href="#">
+                                        <a class="btn btn-social-o facebook"
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}"
+                                            target="_blank">
                                             <i class="fa fa-facebook-f"></i>
-                                            <span>facebook</span>
+                                            <span>{{ __('facebook') }}</span>
                                         </a>
 
                                     </li>
                                     <li class="list-inline-item">
-                                        <a class="btn btn-social-o twitter" href="#">
+                                        <a class="btn btn-social-o twitter"
+                                            href="https://twitter.com/intent/tweet?text={{ $news->title }}&url={{ url()->current() }}"
+                                            target="_blank">
                                             <i class="fa fa-twitter"></i>
-                                            <span>twitter</span>
+                                            <span>{{ __('twitter') }}</span>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a class="btn btn-social-o whatsapp" href="#">
+                                        <a class="btn btn-social-o whatsapp"
+                                            href="https://wa.me/?text={{ $news->title }}%20{{ url()->current() }}"
+                                            target="_blank">
                                             <i class="fa fa-whatsapp"></i>
-                                            <span>whatsapp</span>
+                                            <span>{{ __('whatsapp') }}</span>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a class="btn btn-social-o telegram" href="#">
+                                        <a class="btn btn-social-o telegram"
+                                            href="https://t.me/share/url?url={{ url()->current() }}&text={{ $news->title }}"
+                                            target="_blank">
                                             <i class="fa fa-telegram"></i>
-                                            <span>telegram</span>
+                                            <span>{{ __('telegram') }}</span>
                                         </a>
                                     </li>
 
                                     <li class="list-inline-item">
-                                        <a class="btn btn-linkedin-o linkedin" href="#">
+                                        <a class="btn btn-linkedin-o linkedin"
+                                            href="https://www.linkedin.com/shareArticle?mini=true&url={{ url()->current() }}&title={{ $news->title }}"
+                                            target="_blank">
                                             <i class="fa fa-linkedin"></i>
-                                            <span>linkedin</span>
+                                            <span>{{ __('linkedin') }}</span>
                                         </a>
                                     </li>
 
@@ -194,7 +204,7 @@
                     <!-- Comment  -->
                     @auth
                         <div id="comments" class="comments-area">
-                            <h3 class="comments-title">2 Comments:</h3>
+                            <h3 class="comments-title">{{ $news->comments()->count() }} {{ __('Comments') }}:</h3>
 
                             <ol class="comment-list">
                                 @foreach ($news->comments()->whereNull('parent_id')->get() as $comment)
@@ -202,8 +212,8 @@
                                         <aside class="comment-body">
                                             <div class="comment-meta">
                                                 <div class="comment-author vcard">
-                                                    <img src="{{ asset('frontend/assets/images/avatar5.png') }}" class="avatar"
-                                                        alt="image">
+                                                    <img src="{{ asset('frontend/assets/images/avatar5.png') }}"
+                                                        class="avatar" alt="image">
                                                     <b class="fn">{{ $comment->user->name }}</b>
                                                     <span class="says">{{ __('says') }}:</span>
                                                 </div>
@@ -248,13 +258,14 @@
                                                                 <p>{{ $replay->comment }}</p>
                                                             </div>
 
-                                                            <div class="reply" data-id="{{ $replay->id }}">
+                                                            <div class="reply">
                                                                 @if ($loop->last)
                                                                     <a href="javascript:;" class="comment-reply-link"
                                                                         data-toggle="modal"
-                                                                        data-target="#exampleModal{{ $comment->id }}">Reply</a>
+                                                                        data-target="#exampleModal{{ $comment->id }}">{{ __('Reply') }}</a>
                                                                 @endif
-                                                                <span class="delete-msg" style="margin-left: auto">
+                                                                <span data-id="{{ $replay->id }}" class="delete-msg"
+                                                                    style="margin-left: auto">
                                                                     <i class="fa fa-trash"></i>
                                                                 </span>
                                                             </div>
@@ -271,7 +282,8 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Write Your Comment</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            {{ __('Write Your Comment') }}</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -292,7 +304,7 @@
                                                                 value="{{ $news->id }}">
                                                             <input type="hidden" name="parent_id"
                                                                 value="{{ $comment->id }}">
-                                                            <button type="submit">submit</button>
+                                                            <button type="submit">{{ __('submit') }}</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -303,11 +315,11 @@
                                 @endforeach
                             </ol>
                             <div class="comment-respond">
-                                <h3 class="comment-reply-title">Leave a Reply</h3>
+                                <h3 class="comment-reply-title">{{ __('Leave a Reply') }}</h3>
                                 <form action="{{ route('news-comment') }}" method="POST" class="comment-form">
                                     @csrf
                                     <p class="comment-form-comment">
-                                        <label for="comment">Comment</label>
+                                        <label for="comment">{{ __('Comment') }}</label>
                                         <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525"></textarea>
                                         <input type="hidden" name="news_id" value="{{ $news->id }}">
                                         @error('comment')
@@ -327,7 +339,9 @@
                     @else
                         <div class="card">
                             <div class="card-body">
-                                <b class="p-0">Please <a href="{{ route('login') }}">login</a> to comment in post</b>
+                                <b class="p-0">{{ __('Please') }} <a
+                                        href="{{ route('login') }}">{{ __('login') }}</a>
+                                    {{ __('to comment in post') }}</b>
                             </div>
                         </div>
                     @endauth
@@ -365,168 +379,47 @@
 
                     <div class="related-article">
                         <h4>
-                            you may also like
+                            {{ __('you may also like') }}
                         </h4>
 
-                        <div class="article__entry-carousel-three">
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/newsimage5.png" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    by david hall
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span>
-                                                    descember 09, 2016
-                                                </span>
-                                            </li>
+                        @if (count($relatedNews) > 0)
+                            <div class="article__entry-carousel-three">
+                                @foreach ($relatedNews as $related)
+                                    <div class="item">
+                                        <!-- Post Article -->
+                                        <div class="article__entry">
+                                            <div class="article__image">
+                                                <a href="#">
+                                                    <img src="{{ asset($related->image) }}" alt="{{ $related->title }}"
+                                                        class="img-fluid">
+                                                </a>
+                                            </div>
+                                            <div class="article__content">
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item">
+                                                        <span class="text-primary">
+                                                            {{ __('by') }} {{ $related->author->name }}
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <span>
+                                                            {{ date('M d, Y', strtotime($related->created_at)) }}
+                                                        </span>
+                                                    </li>
 
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-
+                                                </ul>
+                                                <h5>
+                                                    <a href="#">
+                                                        {!! truncate($related->title, 15) !!}
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/newsimage6.png" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    by david hall
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span>
-                                                    descember 09, 2016
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/newsimage7.png" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    by david hall
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span>
-                                                    descember 09, 2016
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/newsimage8.png" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    by david hall
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span>
-                                                    descember 09, 2016
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <!-- Post Article -->
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="#">
-                                            <img src="images/newsimage9.png" alt="" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    by david hall
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span>
-                                                    descember 09, 2016
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                        <h5>
-                                            <a href="#">
-                                                Maecenas accumsan tortor ut velit pharetra mollis.
-                                            </a>
-                                        </h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
-
                 </div>
                 <div class="col-md-4">
                     <div class="sticky-top">
@@ -627,7 +520,7 @@
                                                 <a href="{{ route('news-details', $news->slug) }}"
                                                     class="btn btn-outline-primary mb-4 text-capitalize">
                                                     {{ __('read
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        more') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                more') }}</a>
                                             </div>
                                         </div>
                                     @endif
@@ -638,7 +531,7 @@
 
                         <!-- social media -->
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">stay conected</h4>
+                            <h4 class="border_section">{{ __('stay conected') }}</h4>
                             <!-- widget Social media -->
                             <div class="wrap__social__media">
                                 <a href="#" target="_blank">
@@ -647,10 +540,10 @@
                                             <i class="fa fa-facebook"></i>
                                         </span>
                                         <span class="social__media__widget-counter">
-                                            19,243 fans
+                                            19,243 {{ __('fans') }}
                                         </span>
                                         <span class="social__media__widget-name">
-                                            like
+                                            {{ _('like') }}
                                         </span>
                                     </div>
                                 </a>
@@ -660,7 +553,7 @@
                                             <i class="fa fa-twitter"></i>
                                         </span>
                                         <span class="social__media__widget-counter">
-                                            2.076 followers
+                                            2.076 {{ __('followers') }}
                                         </span>
                                         <span class="social__media__widget-name">
                                             follow
@@ -676,7 +569,7 @@
                                             15,200 followers
                                         </span>
                                         <span class="social__media__widget-name">
-                                            subscribe
+                                            {{ __('subscribe') }}
                                         </span>
                                     </div>
                                 </a>
@@ -686,7 +579,7 @@
                         <!-- End social media -->
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">tags</h4>
+                            <h4 class="border_section">{{ __('tags') }}</h4>
                             <div class="blog-tags p-0">
                                 <ul class="list-inline">
                                     @foreach ($mostCommonTags as $mostTag)
@@ -701,24 +594,24 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">newsletter</h4>
+                            <h4 class="border_section">{{ __('newsletter') }}</h4>
                             <!-- Form Subscribe -->
                             <div class="widget__form-subscribe bg__card-shadow">
                                 <h6>
-                                    The most important world news and events of the day.
+                                    {{ __('The most important world news and events of the day.') }}
                                 </h6>
-                                <p><small>Get magzrenvi daily newsletter on your inbox.</small></p>
+                                <p><small>{{ __('Get magzrenvi daily newsletter on your inbox.') }}</small></p>
                                 <div class="input-group ">
                                     <input type="text" class="form-control" placeholder="Your email address">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">sign up</button>
+                                        <button class="btn btn-primary" type="button">{{ __('sign up') }}</button>
                                     </div>
                                 </div>
                             </div>
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">Advertise</h4>
+                            <h4 class="border_section">{{ __('Advertise') }}</h4>
                             <a href="#">
                                 <figure>
                                     <img src="images/news6.jpg" alt="" class="img-fluid">
@@ -742,13 +635,13 @@
 
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
+                    title: "{{ __('Are you sure?') }}",
+                    text: "{{ __('You wont be able to revert this!') }}",
+                    icon: "{{ __('warning') }}",
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: "{{ __('Yes, delete it!') }}"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
