@@ -14,9 +14,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $breakingNews = News::where([
-            'is_breaking_news' => 1,
-        ])
+        $breakingNews = News::with(['author', 'category'])
+            ->where([
+                'is_breaking_news' => 1,
+            ])
             ->activeEntries()
             ->withLocalize()
             ->orderBy('id', 'desc')
@@ -32,8 +33,17 @@ class HomeController extends Controller
             ->orderBy('id', 'desc')
             ->take(7)
             ->get();
+        $recentNews = News::with(['author', 'category'])
+            // ->where([
+            //     'show_at_slider' => 1,
+            // ])
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('updated_at', 'desc')
+            ->take(6)
+            ->get();
 
-        return view('frontend.home', compact('breakingNews', 'heroSlider'));
+        return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews'));
     }
 
     public function showNews(string $slug)
