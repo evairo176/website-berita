@@ -35,7 +35,7 @@
                         <div class="tab-pane fade show {{ $loop->index === 0 ? 'active' : '' }}"
                             id="home-{{ $language->lang }}" role="tabpanel" aria-labelledby="home-tab2">
                             <div class="w-100">
-                                <form action="" method="POST">
+                                <form action="{{ route('admin.home-section-setting.update') }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
@@ -47,6 +47,11 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('category_section_one')
+                                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                                {{ $message }}</p>
+                                        @enderror
 
                                     </div>
 
@@ -58,7 +63,11 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
-
+                                        @error('category_section_two')
+                                            <p style="font-size: 80%;
+                                    color: #dc3545;">
+                                                {{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
@@ -69,7 +78,11 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
-
+                                        @error('category_section_three')
+                                            <p style="font-size: 80%;
+                                    color: #dc3545;">
+                                                {{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group">
@@ -80,7 +93,11 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
-
+                                        @error('category_section_four')
+                                            <p style="font-size: 80%;
+                                    color: #dc3545;">
+                                                {{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary">{{ __('admin.Save') }}</button>
                                 </form>
@@ -97,6 +114,14 @@
 
 @push('scripts')
     <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                Toast.fire({
+                    icon: "error",
+                    title: "{{ $error }}"
+                });
+            @endforeach
+        @endif
         $(function() {});
     </script>
 @endpush
