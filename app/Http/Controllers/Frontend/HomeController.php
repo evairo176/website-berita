@@ -82,7 +82,7 @@ class HomeController extends Controller
             ->activeEntries()
             ->withLocalize()
             ->orderBy("id", "DESC")
-            ->take(8)
+            ->take(4)
             ->get();
 
 
