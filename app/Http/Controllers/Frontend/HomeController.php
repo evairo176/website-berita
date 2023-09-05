@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -52,7 +53,49 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews', 'popularNews'));
+        $homeSectionSetting = HomeSectionSetting::where(['language' => getLanguage()])->first();
+        $categorySectionOne = News::with(['author', 'category'])
+            ->where("category_id", $homeSectionSetting->category_section_one)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy("id", "DESC")
+            ->take(8)
+            ->get();
+
+        $categorySectionTwo = News::with(['author', 'category'])
+            ->where("category_id", $homeSectionSetting->category_section_two)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy("id", "DESC")
+            ->take(8)
+            ->get();
+
+        $categorySectionThree = News::with(['author', 'category'])
+            ->where("category_id", $homeSectionSetting->category_section_three)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy("id", "DESC")
+            ->take(6)
+            ->get();
+        $categorySectionFour = News::with(['author', 'category'])
+            ->where("category_id", $homeSectionSetting->category_section_four)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy("id", "DESC")
+            ->take(8)
+            ->get();
+
+
+        return view('frontend.home', compact(
+            'breakingNews',
+            'heroSlider',
+            'recentNews',
+            'popularNews',
+            'categorySectionOne',
+            'categorySectionTwo',
+            'categorySectionThree',
+            'categorySectionFour'
+        ));
     }
 
     public function showNews(string $slug)
