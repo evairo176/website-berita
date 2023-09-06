@@ -20,10 +20,14 @@
     <link rel="stylesheet"
         href="{{ asset('/admin') }}/assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="{{ asset('/admin') }}/assets/css/bootstrap-iconpicker.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('/admin') }}/assets/modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('/admin') }}/assets/css/components.css">
+
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -69,6 +73,7 @@
     <script src="{{ asset('/admin') }}/assets/modules/moment.min.js"></script>
     <script src="{{ asset('/admin') }}/assets/js/stisla.js"></script>
 
+
     <!-- JS Libraies -->
     <script src="{{ asset('/admin') }}/assets/modules/summernote/summernote-bs4.js"></script>
     <script src="{{ asset('/admin') }}/assets/modules/upload-preview/assets/js/jquery.uploadPreview.min.js"></script>
@@ -77,6 +82,8 @@
     <script src="{{ asset('/admin') }}/assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js">
     </script>
     <script src="{{ asset('/admin') }}/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="{{ asset('/admin') }}/assets/js/bootstrap-iconpicker.bundle.min.js"></script>
+    <script src="{{ asset('/admin') }}/assets/modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 
 
     <script src="{{ asset('/admin') }}/assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
@@ -101,6 +108,8 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
+
+
 
         $.uploadPreview({
             input_field: "#image-upload", // Default: .image-upload
