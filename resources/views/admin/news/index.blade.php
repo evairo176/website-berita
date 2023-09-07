@@ -35,7 +35,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>{{ __('Image') }}</th>
-                                            <th>{{ __('Name') }}</th>
+                                            <th>{{ __('Title') }}</th>
                                             <th>{{ __('Category') }}</th>
                                             <th>{{ __('In Breaking') }}</th>
                                             <th>{{ __('In Slider') }}</th>

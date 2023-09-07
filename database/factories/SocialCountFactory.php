@@ -17,14 +17,14 @@ class SocialCountFactory extends Factory
     public function definition(): array
     {
         return [
-            'language' => "id",
+            'language' => rand(0, 1) == 1 ? "en" : "id",
             'icon' => $this->faker->city(),
-            'fan_count' => "fan_count",
-            'fan_type' => "facebook",
-            'url'    => "this url",
-            'status'    => 1,
-            'button_text'     => "button text",
-            'color'     => "color text",
+            'fan_count' => $this->faker->name(),
+            'fan_type' => $this->faker->country(),
+            'url'    => $this->faker->url(),
+            'status'    => rand(0, 1),
+            'button_text'     => $this->faker->title(),
+            'color'     => $this->faker->colorName(),
         ];
     }
 }

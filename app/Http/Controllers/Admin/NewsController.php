@@ -30,14 +30,68 @@ class NewsController extends Controller
         if ($request->ajax()) {
             // dd($request->all());
             $lang = $request->input('language');
-            $news = "";
-            if ($lang) {
-                $news = News::with('category')->where('language', $lang)->orderBy('id', 'desc')->get();
-            } else {
-                $news = News::with('category')->where('language', "en")->orderBy('id', 'desc')->get();
+            $draw = $request->get('draw');
+
+            $search = $request->input('search.value');
+            $columns = $request->get('columns');
+
+
+            $pageSize = $request->length ? $request->length : 10;
+
+            $itemQuery = News::with('category');
+
+            $count_filter = 0;
+            if ($search != '') {
+                $itemQuery->where(function ($query) use ($search) {
+                    $query->where('news.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('news.slug', 'LIKE', '%' . $search . '%')
+                        ->orWhereHas('category', function ($query) use ($search) {
+                            $query->where('name', 'LIKE', '%' . $search . '%');
+                        });
+                });
+                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
+                $count_filter = $itemQuery->count();
             }
+            if ($lang) {
+                $itemQuery->where('language', $lang);
+                $count_filter = $itemQuery->count();
+            } else {
+                // Only apply the "en" language filter when a search term is not specified.
+                if ($search == '') {
+                    $itemQuery->where('language', "en");
+                    $count_filter = $itemQuery->count();
+                }
+            }
+
+            $itemCounter = $itemQuery->get();
+            $count_total = $itemCounter->count();
+
+
+
+            // $itemQuery->select(
+            //     'news.*',
+            //     // 'items.code as items_code',
+            //     // 'items.description as items_description',
+            //     // 'brands.description as brands_description'
+            // );
+
+
+
+            $start = $request->start ? $request->start : 0;
+            $itemQuery->skip($start)->take($pageSize);
+            $items = $itemQuery->get();
+
+            if ($count_filter == 0) {
+                $count_filter = $count_total;
+            }
+
             // dd($news);
-            return Datatables::of($news)
+            return Datatables::of($items)
+                ->with([
+                    "recordsTotal" => $count_total,
+                    "recordsFiltered" => $count_filter,
+                ])
+                ->setOffset($start)
                 ->addIndexColumn()
                 ->addColumn('image', function ($row) {
                     $url = asset($row->image);

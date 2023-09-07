@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\SocialCount;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SocialCountSeeder extends Seeder
+class NewsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        SocialCount::factory(3000)->create();
+        //
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminSocialCountStoreRequest;
 use App\Models\Language;
+use App\Models\News;
 use App\Models\SocialCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,6 @@ class SocialCountController extends Controller
 
             // $socialCount = "";
             $lang = $request->input('language');
-            $draw = $request->get('draw');
 
             $search = $request->input('search.value');
             $columns = $request->get('columns');
@@ -36,9 +36,20 @@ class SocialCountController extends Controller
 
             $pageSize = $request->length ? $request->length : 10;
 
-            $itemQuery = DB::table('social_counts');
+            // $itemQuery = DB::table('social_counts');
+            $itemQuery = SocialCount::query();
+            // if join
+            // ->join() bla bla
 
             // $itemQuery->orderBy('items_id', 'asc');
+            if ($lang) {
+                $itemQuery->where('language', $lang)->orderBy('id', 'desc');
+                $count_filter = $itemQuery->count();
+            } else {
+                $itemQuery->where('language', "en")->orderBy('id', 'desc');
+                $count_filter = $itemQuery->count();
+            }
+
             $itemCounter = $itemQuery->get();
             $count_total = $itemCounter->count();
 
@@ -59,11 +70,7 @@ class SocialCountController extends Controller
 
 
 
-            if ($lang) {
-                $itemQuery->where('language', $lang)->orderBy('id', 'desc');
-            } else {
-                $itemQuery->where('language', "en")->orderBy('id', 'desc');
-            }
+
 
             $start = $request->start ? $request->start : 0;
             $itemQuery->skip($start)->take($pageSize);

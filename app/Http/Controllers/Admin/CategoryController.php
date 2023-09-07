@@ -7,6 +7,7 @@ use App\Http\Requests\AdminCategoryCreateRequest;
 use App\Http\Requests\AdminCategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -26,13 +27,67 @@ class CategoryController extends Controller
             // dd($request->all());
             $lang = $request->input('language');
             $category = "";
+
+
+            // $socialCount = "";
+            $lang = $request->input('language');
+            $draw = $request->get('draw');
+
+            $search = $request->input('search.value');
+            $columns = $request->get('columns');
+
+
+            $pageSize = $request->length ? $request->length : 10;
+
+            $itemQuery = new Category();
+            // if join
+            // ->join() bla bla
+
+            // $itemQuery->orderBy('items_id', 'asc');
             if ($lang) {
-                $category = Category::where('language', $lang)->orderBy('name', 'desc')->get();
+                $itemQuery->where('language', $lang)->orderBy('name', 'desc');
+                $count_filter = $itemQuery->count();
             } else {
-                $category = Category::where('language', "en")->orderBy('name', 'desc')->get();
+                $itemQuery->where('language', "en")->orderBy('name', 'desc');
+                $count_filter = $itemQuery->count();
             }
 
-            return Datatables::of($category)
+
+            $itemCounter = $itemQuery->get();
+            $count_total = $itemCounter->count();
+
+            $count_filter = 0;
+            if ($search != '') {
+                $itemQuery->where('categories.name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('categories.slug', 'LIKE', '%' . $search . '%');
+                // ->orWhere( 'items.description' , 'LIKE' , '%'.$search.'%')
+                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
+                $count_filter = $itemQuery->count();
+            }
+
+            $itemQuery->select(
+                'categories.*',
+                // 'items.code as items_code',
+                // 'items.description as items_description',
+                // 'brands.description as brands_description'
+            );
+
+
+            $start = $request->start ? $request->start : 0;
+            $itemQuery->skip($start)->take($pageSize);
+            $items = $itemQuery->get();
+
+            if ($count_filter == 0) {
+                $count_filter = $count_total;
+            }
+
+
+            return Datatables::of($items)
+                ->with([
+                    "recordsTotal" => $count_total,
+                    "recordsFiltered" => $count_filter,
+                ])
+                ->setOffset($start)
                 ->addIndexColumn()
                 ->addColumn('show_at_nav', function ($row) {
                     $show_at_nav = '';
