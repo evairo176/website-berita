@@ -10,7 +10,7 @@
                 <h4>{{ __('Create Social Link') }}</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.category.store') }}" method="POST">
+                <form action="{{ route('admin.social-count.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
@@ -28,12 +28,20 @@
                                 {{ $message }}</p>
                         @enderror
                     </div>
-
                     <div class="form-group">
                         <label for="icon">{{ __('Icon') }}</label>
                         <br>
                         <button class="btn btn-primary" name="icon" role="iconpicker"></button>
                         @error('icon')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="url">{{ __('Url') }}</label>
+                        <input id="url" name="url" type="text" class="form-control">
+                        @error('url')
                             <p style="font-size: 80%;
                         color: #dc3545;">
                                 {{ $message }}</p>
@@ -68,15 +76,20 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Pick Your Color</label>
+                        <label for="color">Pick Your Color</label>
                         <div class="input-group colorpickerinput colorpicker-element" data-colorpicker-id="2">
-                            <input type="text" class="form-control">
+                            <input name="color" type="text" class="form-control">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <i class="fas fa-fill-drip"></i>
                                 </div>
                             </div>
                         </div>
+                        @error('color')
+                            <p style="font-size: 80%;
+                    color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="status">{{ __('Status') }}</label>
