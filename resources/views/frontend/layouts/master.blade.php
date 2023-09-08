@@ -13,6 +13,15 @@
     <meta name="twitter:description" content="@yield('meta_tw_description')">
     <meta name="twitter:image" content="@yield('meta_tw_image')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+    <!-- Bootstrap-Iconpicker -->
+    <link rel="stylesheet" href="dist/css/bootstrap-iconpicker.min.css" />
+
     <link href="{{ asset('/frontend') }}/assets/css/styles.css" rel="stylesheet">
 </head>
 
@@ -31,6 +40,15 @@
     <!-- End Footer  -->
 
     <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+    <!-- jQuery CDN -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap CDN -->
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js">
+    </script>
+    <!-- Bootstrap-Iconpicker Bundle -->
+    <script type="text/javascript" src="dist/js/bootstrap-iconpicker.bundle.min.js"></script>
 
     <script type="text/javascript" src="{{ asset('/frontend') }}/assets/js/index.bundle.js"></script>
     {{-- sweet alert  --}}

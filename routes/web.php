@@ -32,8 +32,10 @@ require __DIR__ . '/auth.php';
 
 Route::get('/language', LanguageController::class)->name('frontend.change-language');
 
-/** news routes */
+/** news detail  */
 Route::get('/news-details/{slug}', [HomeController::class, 'showNews'])->name('news-details');
+/** news detail  */
+Route::get('/news', [HomeController::class, 'news'])->name('news');
 /** news comment */
 Route::post('/news-comment', [HomeController::class, 'handleComment'])->name('news-comment');
 /** news reply comment */

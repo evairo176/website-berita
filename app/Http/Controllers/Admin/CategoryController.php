@@ -24,12 +24,6 @@ class CategoryController extends Controller
 
 
         if ($request->ajax()) {
-            // dd($request->all());
-            $lang = $request->input('language');
-            $category = "";
-
-
-            // $socialCount = "";
             $lang = $request->input('language');
             $draw = $request->get('draw');
 
@@ -39,38 +33,40 @@ class CategoryController extends Controller
 
             $pageSize = $request->length ? $request->length : 10;
 
-            $itemQuery = new Category();
-            // if join
-            // ->join() bla bla
+            $itemQuery = Category::query();
 
-            // $itemQuery->orderBy('items_id', 'asc');
-            if ($lang) {
-                $itemQuery->where('language', $lang)->orderBy('name', 'desc');
-                $count_filter = $itemQuery->count();
-            } else {
-                $itemQuery->where('language', "en")->orderBy('name', 'desc');
+            $count_filter = 0;
+            if ($search != '') {
+                $itemQuery->where(function ($query) use ($search) {
+                    $query->where('categories.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('categories.slug', 'LIKE', '%' . $search . '%');
+                });
+                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
                 $count_filter = $itemQuery->count();
             }
-
+            if ($lang) {
+                $itemQuery->where('language', $lang);
+                $count_filter = $itemQuery->count();
+            } else {
+                // Only apply the "en" language filter when a search term is not specified.
+                if ($search == '') {
+                    $itemQuery->where('language', "en");
+                    $count_filter = $itemQuery->count();
+                }
+            }
 
             $itemCounter = $itemQuery->get();
             $count_total = $itemCounter->count();
 
-            $count_filter = 0;
-            if ($search != '') {
-                $itemQuery->where('categories.name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('categories.slug', 'LIKE', '%' . $search . '%');
-                // ->orWhere( 'items.description' , 'LIKE' , '%'.$search.'%')
-                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
-                $count_filter = $itemQuery->count();
-            }
 
-            $itemQuery->select(
-                'categories.*',
-                // 'items.code as items_code',
-                // 'items.description as items_description',
-                // 'brands.description as brands_description'
-            );
+
+            // $itemQuery->select(
+            //     'news.*',
+            //     // 'items.code as items_code',
+            //     // 'items.description as items_description',
+            //     // 'brands.description as brands_description'
+            // );
+
 
 
             $start = $request->start ? $request->start : 0;

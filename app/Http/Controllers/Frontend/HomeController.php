@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
+use App\Models\SocialCount;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +93,11 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+        $socialCount = SocialCount::where(['status' => 1, 'language' => getLanguage()])
+            ->get();
+
+        $mostCommonTags = $this->mostCommonTags();
+
 
         return view('frontend.home', compact(
             'breakingNews',
@@ -102,7 +108,9 @@ class HomeController extends Controller
             'categorySectionTwo',
             'categorySectionThree',
             'categorySectionFour',
-            'mostViewdNews'
+            'mostViewdNews',
+            'socialCount',
+            'mostCommonTags'
         ));
     }
 
@@ -150,6 +158,11 @@ class HomeController extends Controller
 
 
         return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews'));
+    }
+
+    public function news()
+    {
+        return view('frontend.news');
     }
 
     public function countView($news)

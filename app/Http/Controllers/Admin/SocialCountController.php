@@ -25,10 +25,9 @@ class SocialCountController extends Controller
 
 
         if ($request->ajax()) {
-
-
-            // $socialCount = "";
+            // dd($request->all());
             $lang = $request->input('language');
+            $draw = $request->get('draw');
 
             $search = $request->input('search.value');
             $columns = $request->get('columns');
@@ -36,39 +35,38 @@ class SocialCountController extends Controller
 
             $pageSize = $request->length ? $request->length : 10;
 
-            // $itemQuery = DB::table('social_counts');
             $itemQuery = SocialCount::query();
-            // if join
-            // ->join() bla bla
 
-            // $itemQuery->orderBy('items_id', 'asc');
+            $count_filter = 0;
+            if ($search != '') {
+                $itemQuery->where(function ($query) use ($search) {
+                    $query->where('social_counts.icon', 'LIKE', '%' . $search . '%');
+                });
+                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
+                $count_filter = $itemQuery->count();
+            }
             if ($lang) {
-                $itemQuery->where('language', $lang)->orderBy('id', 'desc');
+                $itemQuery->where('language', $lang);
                 $count_filter = $itemQuery->count();
             } else {
-                $itemQuery->where('language', "en")->orderBy('id', 'desc');
-                $count_filter = $itemQuery->count();
+                // Only apply the "en" language filter when a search term is not specified.
+                if ($search == '') {
+                    $itemQuery->where('language', "en");
+                    $count_filter = $itemQuery->count();
+                }
             }
 
             $itemCounter = $itemQuery->get();
             $count_total = $itemCounter->count();
 
-            $count_filter = 0;
-            if ($search != '') {
-                $itemQuery->where('social_counts.icon', 'LIKE', '%' . $search . '%');
-                // ->orWhere( 'items.description' , 'LIKE' , '%'.$search.'%')
-                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
-                $count_filter = $itemQuery->count();
-            }
-
-            $itemQuery->select(
-                'social_counts.*',
-                // 'items.code as items_code',
-                // 'items.description as items_description',
-                // 'brands.description as brands_description'
-            );
 
 
+            // $itemQuery->select(
+            //     'news.*',
+            //     // 'items.code as items_code',
+            //     // 'items.description as items_description',
+            //     // 'brands.description as brands_description'
+            // );
 
 
 
@@ -87,6 +85,10 @@ class SocialCountController extends Controller
                 ])
                 ->setOffset($start)
                 ->addIndexColumn()
+                ->addColumn('icon', function ($row) {
+                    $default = '<i style="font-size:20px" class="' . $row->icon . '"></i>';
+                    return $default;
+                })
                 ->addColumn('status', function ($row) {
                     $default = '';
                     if ($row->status == '1') {
@@ -102,7 +104,7 @@ class SocialCountController extends Controller
                         <a href="' . route('admin.social-count.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-item"> <i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['action', 'status'])
+                ->rawColumns(['action', 'status', 'icon'])
                 ->make(true);
         }
         return view('admin.social-count.index', compact('languages'));
@@ -150,7 +152,9 @@ class SocialCountController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $languages = Language::all();
+        $socialCount = SocialCount::findOrFail($id);
+        return view('admin.social-count.edit', compact('languages', 'socialCount'));
     }
 
     /**
@@ -158,7 +162,19 @@ class SocialCountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $socialCount = SocialCount::findOrFail($id);
+        $socialCount->language = $request->language;
+        $socialCount->icon = $request->icon;
+        $socialCount->url = $request->url;
+        $socialCount->fan_count = $request->fan_count;
+        $socialCount->fan_type = $request->fan_type;
+        $socialCount->button_text = $request->button_text;
+        $socialCount->color = $request->color;
+        $socialCount->status = $request->status;
+        $socialCount->save();
+        toast(__('Updated successfully'), 'success')->width("350");
+
+        return redirect()->route('admin.social-count.index');
     }
 
     /**
@@ -166,6 +182,19 @@ class SocialCountController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $category = SocialCount::findOrFail($id);
+
+            $category->delete();
+            return response([
+                "status" => "success",
+                'message' => __('Deleted Successfully!')
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                "status" => "error",
+                'message' => __('Something went wrong!')
+            ]);
+        }
     }
 }

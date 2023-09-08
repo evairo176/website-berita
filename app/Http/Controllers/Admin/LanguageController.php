@@ -17,8 +17,53 @@ class LanguageController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Language::all();
-            return Datatables::of($data)
+            $search = $request->input('search.value');
+            $columns = $request->get('columns');
+
+
+            $pageSize = $request->length ? $request->length : 10;
+
+            $itemQuery = Language::query();
+
+            $count_filter = 0;
+            if ($search != '') {
+                $itemQuery->where(function ($query) use ($search) {
+                    $query->where('languages.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('languages.lang', 'LIKE', '%' . $search . '%')
+                        ->orWhere('languages.slug', 'LIKE', '%' . $search . '%');
+                });
+                // ->orWhere( 'items.code' , 'LIKE' , '%'.$search.'%');
+                $count_filter = $itemQuery->count();
+            }
+
+
+            $itemCounter = $itemQuery->get();
+            $count_total = $itemCounter->count();
+
+
+
+            // $itemQuery->select(
+            //     'news.*',
+            //     // 'items.code as items_code',
+            //     // 'items.description as items_description',
+            //     // 'brands.description as brands_description'
+            // );
+
+
+
+            $start = $request->start ? $request->start : 0;
+            $itemQuery->skip($start)->take($pageSize);
+            $items = $itemQuery->get();
+
+            if ($count_filter == 0) {
+                $count_filter = $count_total;
+            }
+            return Datatables::of($items)
+                ->with([
+                    "recordsTotal" => $count_total,
+                    "recordsFiltered" => $count_filter,
+                ])
+                ->setOffset($start)
                 ->addIndexColumn()
                 ->addColumn('default', function ($row) {
                     $default = '';

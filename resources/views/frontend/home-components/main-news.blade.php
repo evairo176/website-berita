@@ -190,37 +190,38 @@
             <div class="col-md-12">
                 <div class="article__entry-carousel">
                     @foreach ($categorySectionOne as $categoryOne)
-                    <div class="item">
-                        <!-- Post Article -->
-                        <div class="article__entry">
-                            <div class="article__image">
-                                <a href="{{ route('news-details',$categoryOne->slug) }}">
-                                    <img src="{{ asset($categoryOne->image) }}" alt="{{ $categoryOne->title }}" class="img-fluid">
-                                </a>
-                            </div>
-                            <div class="article__content">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="text-primary">
-                                            {{ __('by') }} {{ $categoryOne->author->name }}
-                                        </span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>
-                                            {{ date('M d, Y', strtotime($categoryOne->created_at)) }}
-                                        </span>
-                                    </li>
-
-                                </ul>
-                                <h5>
-                                    <a href="{{ route('news-details',$categoryOne->slug) }}">
-                                        {!! truncate($categoryOne->title,40) !!}
+                        <div class="item">
+                            <!-- Post Article -->
+                            <div class="article__entry">
+                                <div class="article__image">
+                                    <a href="{{ route('news-details', $categoryOne->slug) }}">
+                                        <img src="{{ asset($categoryOne->image) }}" alt="{{ $categoryOne->title }}"
+                                            class="img-fluid">
                                     </a>
-                                </h5>
+                                </div>
+                                <div class="article__content">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="text-primary">
+                                                {{ __('by') }} {{ $categoryOne->author->name }}
+                                            </span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span>
+                                                {{ date('M d, Y', strtotime($categoryOne->created_at)) }}
+                                            </span>
+                                        </li>
 
+                                    </ul>
+                                    <h5>
+                                        <a href="{{ route('news-details', $categoryOne->slug) }}">
+                                            {!! truncate($categoryOne->title, 40) !!}
+                                        </a>
+                                    </h5>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -229,7 +230,7 @@
     <!-- End Popular news category -->
 
     <!-- Post news carousel -->
-     <div class="container mt-4">
+    <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
                 <aside class="wrapper__list__article">
@@ -239,37 +240,38 @@
             <div class="col-md-12">
                 <div class="article__entry-carousel">
                     @foreach ($categorySectionTwo as $categoryTwo)
-                    <div class="item">
-                        <!-- Post Article -->
-                        <div class="article__entry">
-                            <div class="article__image">
-                                <a href="{{ route('news-details',$categoryTwo->slug) }}">
-                                    <img src="{{ asset($categoryTwo->image) }}" alt="{{ $categoryTwo->title }}" class="img-fluid">
-                                </a>
-                            </div>
-                            <div class="article__content">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="text-primary">
-                                            {{ __('by') }} {{ $categoryTwo->author->name }}
-                                        </span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>
-                                            {{ date('M d, Y', strtotime($categoryTwo->created_at)) }}
-                                        </span>
-                                    </li>
-
-                                </ul>
-                                <h5>
-                                    <a href="{{ route('news-details',$categoryTwo->slug) }}">
-                                        {!! truncate($categoryTwo->title,40) !!}
+                        <div class="item">
+                            <!-- Post Article -->
+                            <div class="article__entry">
+                                <div class="article__image">
+                                    <a href="{{ route('news-details', $categoryTwo->slug) }}">
+                                        <img src="{{ asset($categoryTwo->image) }}" alt="{{ $categoryTwo->title }}"
+                                            class="img-fluid">
                                     </a>
-                                </h5>
+                                </div>
+                                <div class="article__content">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="text-primary">
+                                                {{ __('by') }} {{ $categoryTwo->author->name }}
+                                            </span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span>
+                                                {{ date('M d, Y', strtotime($categoryTwo->created_at)) }}
+                                            </span>
+                                        </li>
 
+                                    </ul>
+                                    <h5>
+                                        <a href="{{ route('news-details', $categoryTwo->slug) }}">
+                                            {!! truncate($categoryTwo->title, 40) !!}
+                                        </a>
+                                    </h5>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -288,76 +290,78 @@
                         <div class="row">
                             <div class="col-md-6">
                                 @foreach ($categorySectionThree as $categoryThree)
-                                @if ($loop->index <= 2)
-                                <div class="mb-4">
-                                    <!-- Post Article -->
-                                    <div class="article__entry">
-                                        <div class="article__image">
-                                            <a href="{{ route('news-details',$categoryThree->slug) }}">
-                                                <img src="{{ asset($categoryThree->image) }}" alt="{{ $categoryThree->title }}" class="img-fluid">
-                                            </a>
-                                        </div>
-                                        <div class="article__content">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item">
-                                                    <span class="text-primary">
-                                                        {{ __('by') }} {{ $categoryThree->author->name }}
-                                                    </span>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <span>
-                                                        {{ date('M d, Y', strtotime($categoryThree->created_at)) }}
-                                                    </span>
-                                                </li>
+                                    @if ($loop->index <= 2)
+                                        <div class="mb-4">
+                                            <!-- Post Article -->
+                                            <div class="article__entry">
+                                                <div class="article__image">
+                                                    <a href="{{ route('news-details', $categoryThree->slug) }}">
+                                                        <img src="{{ asset($categoryThree->image) }}"
+                                                            alt="{{ $categoryThree->title }}" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                                <div class="article__content">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <span class="text-primary">
+                                                                {{ __('by') }} {{ $categoryThree->author->name }}
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <span>
+                                                                {{ date('M d, Y', strtotime($categoryThree->created_at)) }}
+                                                            </span>
+                                                        </li>
 
-                                            </ul>
-                                            <h5>
-                                                <a href="{{ route('news-details',$categoryThree->slug) }}">
-                                                    {!! truncate($categoryThree->title,40) !!}
-                                                </a>
-                                            </h5>
+                                                    </ul>
+                                                    <h5>
+                                                        <a href="{{ route('news-details', $categoryThree->slug) }}">
+                                                            {!! truncate($categoryThree->title, 40) !!}
+                                                        </a>
+                                                    </h5>
 
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                @endif
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="col-md-6">
                                 @foreach ($categorySectionThree as $categoryThree)
-                                @if ($loop->index > 2 && $loop->index <= 5)
-                                <div class="mb-4">
-                                    <!-- Post Article -->
-                                    <div class="article__entry">
-                                        <div class="article__image">
-                                            <a href="{{ route('news-details',$categoryThree->slug) }}">
-                                                <img src="{{ asset($categoryThree->image) }}" alt="{{ $categoryThree->title }}" class="img-fluid">
-                                            </a>
-                                        </div>
-                                        <div class="article__content">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item">
-                                                    <span class="text-primary">
-                                                        {{ __('by') }} {{ $categoryThree->author->name }}
-                                                    </span>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <span>
-                                                        {{ date('M d, Y', strtotime($categoryThree->created_at)) }}
-                                                    </span>
-                                                </li>
+                                    @if ($loop->index > 2 && $loop->index <= 5)
+                                        <div class="mb-4">
+                                            <!-- Post Article -->
+                                            <div class="article__entry">
+                                                <div class="article__image">
+                                                    <a href="{{ route('news-details', $categoryThree->slug) }}">
+                                                        <img src="{{ asset($categoryThree->image) }}"
+                                                            alt="{{ $categoryThree->title }}" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                                <div class="article__content">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <span class="text-primary">
+                                                                {{ __('by') }} {{ $categoryThree->author->name }}
+                                                            </span>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <span>
+                                                                {{ date('M d, Y', strtotime($categoryThree->created_at)) }}
+                                                            </span>
+                                                        </li>
 
-                                            </ul>
-                                            <h5>
-                                                <a href="{{ route('news-details',$categoryThree->slug) }}">
-                                                    {!! truncate($categoryThree->title,40) !!}
-                                                </a>
-                                            </h5>
+                                                    </ul>
+                                                    <h5>
+                                                        <a href="{{ route('news-details', $categoryThree->slug) }}">
+                                                            {!! truncate($categoryThree->title, 40) !!}
+                                                        </a>
+                                                    </h5>
 
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                @endif
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -374,52 +378,54 @@
                         <div class="wrapp__list__article-responsive">
                             <!-- Post Article List -->
                             @foreach ($categorySectionFour as $categoryFour)
-                            <div class="card__post card__post-list card__post__transition mt-30">
-                                <div class="row ">
-                                    <div class="col-md-5">
-                                        <div class="card__post__transition">
-                                            <a href="{{ route('news-details',$categoryFour->slug) }}">
-                                                <img src="{{ asset($categoryFour->image) }}" class="img-fluid w-100"
-                                                    alt="{{ $categoryFour->title }}">
-                                            </a>
+                                <div class="card__post card__post-list card__post__transition mt-30">
+                                    <div class="row ">
+                                        <div class="col-md-5">
+                                            <div class="card__post__transition">
+                                                <a href="{{ route('news-details', $categoryFour->slug) }}">
+                                                    <img src="{{ asset($categoryFour->image) }}"
+                                                        class="img-fluid w-100" alt="{{ $categoryFour->title }}">
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-7 my-auto pl-0">
-                                        <div class="card__post__body ">
-                                            <div class="card__post__content  ">
-                                                <div class="card__post__category ">
-                                                    {{ $categoryFour->category->name }}
-                                                </div>
-                                                <div class="card__post__author-info mb-2">
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <span class="text-primary">
-                                                                {{ __('by') }} {{ $categoryFour->author->name }}
-                                                            </span>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <span class="text-dark text-capitalize">
-                                                                {{ date('M d, Y', strtotime($categoryFour->created_at)) }}
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="card__post__title">
-                                                    <h5>
-                                                        <a href="{{ route('news-details',$categoryFour->slug) }}">
-                                                            {!! truncate($categoryFour->title,40) !!}
-                                                        </a>
-                                                    </h5>
-                                                    <p class="d-none d-lg-block d-xl-block mb-0 text-justify">
-                                                        {!! truncateHtml($categoryFour->content,200) !!}
-                                                    </p>
+                                        <div class="col-md-7 my-auto pl-0">
+                                            <div class="card__post__body ">
+                                                <div class="card__post__content  ">
+                                                    <div class="card__post__category ">
+                                                        {{ $categoryFour->category->name }}
+                                                    </div>
+                                                    <div class="card__post__author-info mb-2">
+                                                        <ul class="list-inline">
+                                                            <li class="list-inline-item">
+                                                                <span class="text-primary">
+                                                                    {{ __('by') }}
+                                                                    {{ $categoryFour->author->name }}
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <span class="text-dark text-capitalize">
+                                                                    {{ date('M d, Y', strtotime($categoryFour->created_at)) }}
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="card__post__title">
+                                                        <h5>
+                                                            <a
+                                                                href="{{ route('news-details', $categoryFour->slug) }}">
+                                                                {!! truncate($categoryFour->title, 40) !!}
+                                                            </a>
+                                                        </h5>
+                                                        <p class="d-none d-lg-block d-xl-block mb-0 text-justify">
+                                                            {!! truncateHtml($categoryFour->content, 200) !!}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </aside>
@@ -434,85 +440,88 @@
 
                                 <!-- Post Article -->
                                 @foreach ($mostViewdNews as $news)
-                                @if ($loop->index < 1)
-                                <div class="article__entry">
-                                    <div class="article__image">
-                                        <a href="{{ route('news-details',$news->slug) }}">
-                                            <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="article__content">
-                                        <div class="article__category">
-                                            {{ $news->category->name }}
-                                        </div>
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="text-primary">
-                                                    {{ __('by') }} {{ $news->author->name }}
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="text-dark text-capitalize">
-                                                    {{ date('M d, Y', strtotime($news->created_at)) }}
-                                                </span>
-                                            </li>
+                                    @if ($loop->index < 1)
+                                        <div class="article__entry">
+                                            <div class="article__image">
+                                                <a href="{{ route('news-details', $news->slug) }}">
+                                                    <img src="{{ asset($news->image) }}" alt="{{ $news->title }}"
+                                                        class="img-fluid">
+                                                </a>
+                                            </div>
+                                            <div class="article__content">
+                                                <div class="article__category">
+                                                    {{ $news->category->name }}
+                                                </div>
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item">
+                                                        <span class="text-primary">
+                                                            {{ __('by') }} {{ $news->author->name }}
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <span class="text-dark text-capitalize">
+                                                            {{ date('M d, Y', strtotime($news->created_at)) }}
+                                                        </span>
+                                                    </li>
 
-                                        </ul>
-                                        <h5>
-                                            <a href="{{ route('news-details',$news->slug) }}">
-                                                {!! truncate($news->title,40) !!}
-                                            </a>
-                                        </h5>
-                                        <p>
-                                            {!! truncateHtml($news->content,200) !!}
-                                        </p>
-                                        <a href="{{ route('news-details',$news->slug) }}" class="btn btn-outline-primary mb-4 text-capitalize">
-                                            read
-                                            more</a>
-                                    </div>
-                                </div>
-                                @endif
+                                                </ul>
+                                                <h5>
+                                                    <a href="{{ route('news-details', $news->slug) }}">
+                                                        {!! truncate($news->title, 40) !!}
+                                                    </a>
+                                                </h5>
+                                                <p>
+                                                    {!! truncateHtml($news->content, 200) !!}
+                                                </p>
+                                                <a href="{{ route('news-details', $news->slug) }}"
+                                                    class="btn btn-outline-primary mb-4 text-capitalize">
+                                                    read
+                                                    more</a>
+                                            </div>
+                                        </div>
+                                    @endif
                                 @endforeach
                                 @foreach ($mostViewdNews as $news)
-                                @if ($loop->index > 0 && $loop->index <= 2)
-                                <div class="mb-3">
-                                    <!-- Post Article -->
-                                    <div class="card__post card__post-list">
-                                        <div class="image-sm">
-                                            <a href="{{ route('news-details',$news->slug) }}">
-                                                <img src="{{ asset($news->image) }}" class="img-fluid" alt="{{ $news->title }}">
-                                            </a>
-                                        </div>
-
-                                        <div class="card__post__body ">
-                                            <div class="card__post__content">
-                                                <div class="card__post__author-info mb-2">
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <span class="text-primary">
-                                                                {{ __('by') }} {{ $news->author->name }}
-                                                            </span>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <span class="text-dark text-capitalize">
-                                                                {{ date('M d, Y', strtotime($news->created_at)) }}
-                                                            </span>
-                                                        </li>
-
-                                                    </ul>
+                                    @if ($loop->index > 0 && $loop->index <= 2)
+                                        <div class="mb-3">
+                                            <!-- Post Article -->
+                                            <div class="card__post card__post-list">
+                                                <div class="image-sm">
+                                                    <a href="{{ route('news-details', $news->slug) }}">
+                                                        <img src="{{ asset($news->image) }}" class="img-fluid"
+                                                            alt="{{ $news->title }}">
+                                                    </a>
                                                 </div>
-                                                <div class="card__post__title">
-                                                    <h6>
-                                                        <a href="{{ route('news-details',$news->slug) }}">
-                                                            {!! truncate($news->title,40) !!}
-                                                        </a>
-                                                    </h6>
+
+                                                <div class="card__post__body ">
+                                                    <div class="card__post__content">
+                                                        <div class="card__post__author-info mb-2">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                    <span class="text-primary">
+                                                                        {{ __('by') }} {{ $news->author->name }}
+                                                                    </span>
+                                                                </li>
+                                                                <li class="list-inline-item">
+                                                                    <span class="text-dark text-capitalize">
+                                                                        {{ date('M d, Y', strtotime($news->created_at)) }}
+                                                                    </span>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                        <div class="card__post__title">
+                                                            <h6>
+                                                                <a href="{{ route('news-details', $news->slug) }}">
+                                                                    {!! truncate($news->title, 40) !!}
+                                                                </a>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                @endif
+                                    @endif
                                 @endforeach
 
 
@@ -520,133 +529,51 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">stay conected</h4>
+                            <h4 class="border_section">{{ __('stay conected') }}</h4>
                             <!-- widget Social media -->
                             <div class="wrap__social__media">
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget facebook">
-                                        <span class="social__media__widget-icon">
-                                            <i class="fa fa-facebook"></i>
-                                        </span>
-                                        <span class="social__media__widget-counter">
-                                            19,243 fans
-                                        </span>
-                                        <span class="social__media__widget-name">
-                                            like
-                                        </span>
-                                    </div>
-                                </a>
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget twitter">
-                                        <span class="social__media__widget-icon">
-                                            <i class="fa fa-twitter"></i>
-                                        </span>
-                                        <span class="social__media__widget-counter">
-                                            2.076 followers
-                                        </span>
-                                        <span class="social__media__widget-name">
-                                            follow
-                                        </span>
-                                    </div>
-                                </a>
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget youtube">
-                                        <span class="social__media__widget-icon">
-                                            <i class="fa fa-youtube"></i>
-                                        </span>
-                                        <span class="social__media__widget-counter">
-                                            15,200 followers
-                                        </span>
-                                        <span class="social__media__widget-name">
-                                            subscribe
-                                        </span>
-                                    </div>
-                                </a>
+                                @foreach ($socialCount as $medsos)
+                                    <a href="{{ $medsos->url }}" target="_blank">
+                                        <div class="social__media__widget mt-2"
+                                            style="background-color: {{ $medsos->color }};padding: 6px;
+                                            color: #fff;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-between;">
+                                            <div
+                                                style="display: flex;
+                                            align-items: center;">
+                                                <span class="social__media__widget-icon"
+                                                    style="  display: flex;
+                                            justify-content: space-around;
+                                            align-items: center;">
+                                                    <i class="{{ $medsos->icon }}"></i>
+                                                </span>
+                                                <span class="social__media__widget-counter">
+                                                    {{ $medsos->fan_count }} {{ $medsos->type }}
+                                                </span>
+                                            </div>
+                                            <span class="social__media__widget-name">
+                                                {{ $medsos->button_text }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                @endforeach
 
                             </div>
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">tags</h4>
+                            <h4 class="border_section">{{ __('tags') }}</h4>
                             <div class="blog-tags p-0">
                                 <ul class="list-inline">
-
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #property
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #sea
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #programming
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #sea
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #property
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #life style
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #technology
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #framework
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #sport
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #game
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #wfh
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #sport
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #game
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #wfh
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#">
-                                            #framework
-                                        </a>
-                                    </li>
-
+                                    @foreach ($mostCommonTags as $mostTag)
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                #{{ $mostTag->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </aside>
