@@ -55,44 +55,44 @@
                         <h4 class="border_section">Category title</h4>
 
                         <div class="row">
-                            @forelse ($news as $news)
+                            @forelse ($news as $post)
                                 <div class="col-lg-6">
                                     <!-- Post Article -->
                                     <div class="article__entry">
                                         <div class="article__image">
-                                            <a href="{{ route('news-details', $news->slug) }}">
-                                                <img src="{{ asset($news->image) }}" alt="" class="img-fluid">
+                                            <a href="{{ route('news-details', $post->slug) }}">
+                                                <img src="{{ asset($post->image) }}" alt="" class="img-fluid">
                                             </a>
                                         </div>
                                         <div class="article__content">
                                             <div class="article__category">
-                                                {{ $news->category->name }}
+                                                {{ $post->category->name }}
                                             </div>
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
                                                     <span class="text-primary">
-                                                        {{ __('by') }} {{ $news->author->name }}
+                                                        {{ __('by') }} {{ $post->author->name }}
                                                     </span>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span class="text-dark text-capitalize">
-                                                        {{ date('M d, Y', strtotime($news->created_at)) }}
+                                                        {{ date('M d, Y', strtotime($post->created_at)) }}
                                                     </span>
                                                 </li>
 
                                             </ul>
                                             <h5>
-                                                <a href="{{ route('news-details', $news->slug) }}">
-                                                    {!! truncate($news->title, 40) !!}
+                                                <a href="{{ route('news-details', $post->slug) }}">
+                                                    {!! truncate($post->title, 40) !!}
                                                 </a>
                                             </h5>
                                             <p>
-                                                {!! truncateHtml($news->content, 100) !!}
+                                                {!! truncateHtml($post->content, 100) !!}
                                             </p>
-                                            <a href="{{ route('news-details', $news->slug) }}"
+                                            <a href="{{ route('news-details', $post->slug) }}"
                                                 class="btn btn-outline-primary mb-4 text-capitalize">
                                                 {{ __('read
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            more') }}</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            more') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +104,11 @@
                         </div>
 
                     </aside>
-
+                    <!-- Pagination -->
+                    <div data-wow-duration="2s" data-wow-delay="0.5s" class="wow fadeIn animated "
+                        style="display: flex; justify-content:center;visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">
+                        {{ $news->appends(request()->query())->links() }}
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="sidebar-sticky">
@@ -384,34 +388,7 @@
 
                 <div class="clearfix"></div>
             </div>
-            <!-- Pagination -->
-            <div class="pagination-area">
-                <div class="pagination wow fadeIn animated" data-wow-duration="2s" data-wow-delay="0.5s"
-                    style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">
-                    <a href="#">
-                        «
-                    </a>
-                    <a href="#">
-                        1
-                    </a>
-                    <a class="active" href="#">
-                        2
-                    </a>
-                    <a href="#">
-                        3
-                    </a>
-                    <a href="#">
-                        4
-                    </a>
-                    <a href="#">
-                        5
-                    </a>
 
-                    <a href="#">
-                        »
-                    </a>
-                </div>
-            </div>
         </div>
         <div class="large_add_banner mb-4">
             <div class="container">

@@ -162,7 +162,6 @@ class HomeController extends Controller
 
     public function news(Request $request)
     {
-        $news = [];
         if ($request->has('search')) {
             $news = News::with(['category', 'author'])
                 ->where(function ($query) use ($request) {
@@ -174,7 +173,7 @@ class HomeController extends Controller
                 })
                 ->activeEntries()
                 ->withLocalize()
-                ->get();
+                ->paginate(10);
         }
         return view('frontend.news', compact('news'));
     }
