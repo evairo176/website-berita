@@ -101,15 +101,13 @@
                         <div class="container">
                             <div class="input-group ">
                                 <form action="{{ route('news') }}" method="GET">
-
                                     <div class="row no-gutters mt-3">
                                         <div class="col">
                                             <input class="form-control border-secondary border-right-0 rounded-0"
-                                                type="search" value="" placeholder="Search "
-                                                id="example-search-input4">
+                                                type="search" name="search" value="" placeholder="Search ">
                                         </div>
                                         <div class="col-auto">
-                                            <button
+                                            <button type="submit"
                                                 class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i
                                                     class="fa fa-search"></i></button>
                                         </div>
