@@ -34,25 +34,26 @@
                                         placeholder="Type here">
                                 </div>
                                 <div class="col-lg-4">
-                                    <select>
-                                        <option value="#">Select Category</option>
-                                        <option value="#">Category 1</option>
-                                        <option value="#">Category 2</option>
-                                        <option value="#">Category 3</option>
-                                        <option value="#">Category 4</option>
-                                        <option value="#">Category 5</option>
-                                        <option value="#">Category 6</option>
+                                    <select name="category">
+                                        <option value="">{{ __('All') }}</option>
+                                        @foreach ($categories as $category)
+                                            <option {{ $category->slug === request()->category ? 'selected' : '' }}
+                                                value="{{ $category->slug }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="submit">search</button>
+                                    <button type="submit">{{ __('search') }}</button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                     <aside class="wrapper__list__article ">
-                        <h4 class="border_section">Category title</h4>
+                        @if (request()->has('category'))
+                            <h4 class="border_section">{{ __('Category') }}:
+                                {{ request()->category ? request()->category : __('All') }}</h4>
+                        @endif
 
                         <div class="row">
                             @forelse ($news as $post)
@@ -112,7 +113,10 @@
                 <div class="col-md-4">
                     <div class="sidebar-sticky">
                         <aside class="wrapper__list__article ">
-                            <h4 class="border_section">Sidebar</h4>
+
+                            <h4 class="border_section">{{ __('Sidebar') }}:
+                            </h4>
+
                             <div class="wrapper__list__article-small">
                                 @foreach ($recentNews as $recent)
                                     @if ($loop->index <= 2)
@@ -209,7 +213,7 @@
                                 <ul class="list-inline">
                                     @foreach ($mostCommonTags as $mostTag)
                                         <li class="list-inline-item">
-                                            <a href="#">
+                                            <a href="{{ route('news', ['tag' => $mostTag->name]) }}">
                                                 #{{ $mostTag->name }}
                                             </a>
                                         </li>
