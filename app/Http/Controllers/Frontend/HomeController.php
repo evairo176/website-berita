@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ads;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
@@ -99,6 +100,8 @@ class HomeController extends Controller
 
         $mostCommonTags = $this->mostCommonTags();
 
+        $ads = Ads::first();
+
 
         return view('frontend.home', compact(
             'breakingNews',
@@ -111,7 +114,8 @@ class HomeController extends Controller
             'categorySectionFour',
             'mostViewdNews',
             'socialCount',
-            'mostCommonTags'
+            'mostCommonTags',
+            'ads'
         ));
     }
 
@@ -158,9 +162,10 @@ class HomeController extends Controller
             ->get();
         // dd($relatedNews);
 
+        $ads = Ads::first();
 
 
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews', 'socialCount'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews', 'socialCount', 'ads'));
     }
 
     public function news(Request $request)
@@ -213,7 +218,9 @@ class HomeController extends Controller
             'language' => getLanguage()
         ])->get();
 
-        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
+        $ads = Ads::first();
+
+        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories', 'ads'));
     }
 
     public function countView($news)

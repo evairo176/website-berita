@@ -25,6 +25,14 @@
                                 {{ $message }}</p>
                         @enderror
 
+                        <label for="home_top_bar_ads_url" class="mt-3">{{ __('Top Bar Ads Url') }}</label>
+                        <input name="home_top_bar_ads_url" type="text" class="form-control">
+                        @error('home_top_bar_ads_url')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
+
                         <label class="custom-switch mt-2">
                             <input {{ $ads->home_top_bar_ads_status == 1 ? 'checked' : '' }} name="home_top_bar_ads_status"
                                 value="1" type="checkbox" class="custom-switch-input toggle-status">
@@ -37,6 +45,14 @@
                         <label for="home_middle_ads">{{ __('Middle Ads') }}</label>
                         <input name="home_middle_ads" type="file" class="form-control">
                         @error('home_middle_ads')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
+
+                        <label for="home_middle_ads_url" class="mt-3">{{ __('Middle Ads Url') }}</label>
+                        <input name="home_middle_ads_url" type="text" class="form-control">
+                        @error('home_middle_ads_url')
                             <p style="font-size: 80%;
                         color: #dc3545;">
                                 {{ $message }}</p>
@@ -59,6 +75,14 @@
                         color: #dc3545;">
                                 {{ $message }}</p>
                         @enderror
+
+                        <label for="news_page_ads_url" class="mt-3">{{ __('Bottom Ads Url') }}</label>
+                        <input name="news_page_ads_url" type="text" class="form-control">
+                        @error('news_page_ads_url')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
                         <label class="custom-switch mt-2">
                             <input {{ $ads->news_page_ads_status == 1 ? 'checked' : '' }} name="news_page_ads_status"
                                 value="1" type="checkbox" class="custom-switch-input toggle-status">
@@ -77,6 +101,14 @@
                         color: #dc3545;">
                                 {{ $message }}</p>
                         @enderror
+
+                        <label for="view_page_ads_url" class="mt-3">{{ __('Bottom Ads Url') }}</label>
+                        <input name="view_page_ads_url" type="text" class="form-control">
+                        @error('view_page_ads_url')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
                         <label class="custom-switch mt-2">
                             <input {{ $ads->view_page_ads_status == 1 ? 'checked' : '' }} name="view_page_ads_status"
                                 value="1" type="checkbox" class="custom-switch-input toggle-status">
@@ -91,6 +123,14 @@
                         <label for="sidebar_ads">{{ __('Sidebar Ads') }}</label>
                         <input name="sidebar_ads" type="file" class="form-control">
                         @error('sidebar_ads')
+                            <p style="font-size: 80%;
+                        color: #dc3545;">
+                                {{ $message }}</p>
+                        @enderror
+
+                        <label for="sidebar_ads_url" class="mt-3">{{ __('Sidebar Ads Url') }}</label>
+                        <input name="sidebar_ads_url" type="text" class="form-control">
+                        @error('sidebar_ads_url')
                             <p style="font-size: 80%;
                         color: #dc3545;">
                                 {{ $message }}</p>

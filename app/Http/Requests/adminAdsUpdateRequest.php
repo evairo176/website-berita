@@ -22,11 +22,11 @@ class adminAdsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "home_top_bar_ads" => ['nullable', 'image', 'max:3000'],
-            "home_middle_ads" => ['nullable', 'image', 'max:3000'],
-            "news_page_ads" => ['nullable', 'image', 'max:3000'],
-            "view_page_ads" => ['nullable', 'image', 'max:3000'],
-            "sidebar_ads" => ['nullable', 'image', 'max:3000'],
+            "home_top_bar_ads" => ['nullable', 'image', 'max:5000'],
+            "home_middle_ads" => ['nullable', 'image', 'max:5000'],
+            "news_page_ads" => ['nullable', 'image', 'max:5000'],
+            "view_page_ads" => ['nullable', 'image', 'max:5000'],
+            "sidebar_ads" => ['nullable', 'image', 'max:5000'],
         ];
     }
 }
