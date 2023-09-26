@@ -582,7 +582,7 @@
 
                         @if ($ads->sidebar_ads_status == 1)
                             <aside class="wrapper__list__article">
-                                <h4 class="border_section">Advertise</h4>
+                                <h4 class="border_section">{{ __('Advertise') }}</h4>
                                 <a href="#">
                                     <figure>
                                         <img src="{{ asset($ads->sidebar_ads) }}" alt="" class="img-fluid">
@@ -593,19 +593,23 @@
 
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">newsletter</h4>
+                            <h4 class="border_section">{{ __('newsletter') }}</h4>
                             <!-- Form Subscribe -->
                             <div class="widget__form-subscribe bg__card-shadow">
                                 <h6>
-                                    The most important world news and events of the day.
+                                    {{ __('The most important world news and events of the day.') }}
                                 </h6>
-                                <p><small>Get magzrenvi daily newsletter on your inbox.</small></p>
-                                <div class="input-group ">
-                                    <input type="text" class="form-control" placeholder="Your email address">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">sign up</button>
+                                <p><small>{{ __('Get magzrenvi daily newsletter on your inbox.') }}</small></p>
+                                <form action="" class="newsletter-form">
+                                    <div class="input-group ">
+                                        <input name="email" type="text" class="form-control"
+                                            placeholder="Your email address">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary newsletter-button"
+                                                type="submit">{{ __('sign up') }}</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </aside>
                     </div>

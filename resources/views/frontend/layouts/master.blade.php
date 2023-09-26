@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
-    <!-- Bootstrap-Iconpicker -->
-    <link rel="stylesheet" href="dist/css/bootstrap-iconpicker.min.css" />
+    {{-- <!-- Bootstrap-Iconpicker -->
+    <link rel="stylesheet" href="{{ asset('/frontend') }}/dist/css/bootstrap-iconpicker.min.css" /> --}}
 
     <link href="{{ asset('/frontend') }}/assets/css/styles.css" rel="stylesheet">
 </head>
@@ -47,8 +47,8 @@
     <!-- Bootstrap CDN -->
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js">
     </script>
-    <!-- Bootstrap-Iconpicker Bundle -->
-    <script type="text/javascript" src="dist/js/bootstrap-iconpicker.bundle.min.js"></script>
+    {{-- <!-- Bootstrap-Iconpicker Bundle -->
+    <script type="text/javascript" src="dist/js/bootstrap-iconpicker.bundle.min.js"></script> --}}
 
     <script type="text/javascript" src="{{ asset('/frontend') }}/assets/js/index.bundle.js"></script>
     {{-- sweet alert  --}}
@@ -62,6 +62,19 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
         $(document).ready(function() {
             $('#site-language').on('change', function() {
                 let languageCode = $(this).val();
@@ -78,6 +91,47 @@
                     },
                     error: function(error) {
                         console.error(error)
+                    }
+                })
+            })
+
+            // subscribe newsletter
+            $(".newsletter-form").on("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "post",
+                    url: "{{ route('subscribe-newsletter') }}",
+                    data: $(this).serialize(),
+                    beforeSend: function(e) {
+                        $(".newsletter-button").text("Loading...");
+                        $(".newsletter-button").attr("disabled", true);
+                    },
+                    success: function(data) {
+                        console.log(data)
+                        if (data.status = "success") {
+                            Toast.fire({
+                                icon: "success",
+                                title: data.message
+                            })
+                            $(".newsletter-form")[0].reset();
+                            $(".newsletter-button").text("SIGN UP");
+                            $(".newsletter-button").attr("disabled", false);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data)
+                        if (data.status === 422) {
+                            let errors = data.responseJSON.errors;
+                            $.each(errors, function(index, value) {
+                                Toast.fire({
+                                    icon: "error",
+                                    title: value[0]
+                                })
+                            })
+                            $(".newsletter-button").text("SIGN UP");
+                            $(".newsletter-button").attr("disabled", false);
+                        }
+
                     }
                 })
             })

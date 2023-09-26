@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\SocialCount;
+use App\Models\Subscriber;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -297,5 +298,20 @@ class HomeController extends Controller
 
         toast(__('Comment deleted successfully'), 'success')->width("350");
         return response(['status' => 'error', 'message' => _('Something went wrong!')]);
+    }
+
+    public function subscribeNewsletter(Request $request)
+    {
+        $request->validate([
+            "email" => ["required", "email", "max:255", "unique:subscribers,email"]
+        ], [
+            "email.unique" => __("Email is already subscribed!")
+        ]);
+
+        $subscriber = new Subscriber();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+
+        return response(['status' => 'success', 'message' => _('Subscribed successfully!')]);
     }
 }
